@@ -1,0 +1,26 @@
+0.6
+2019.2
+Nov  6 2019
+21:57:16
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/glbl.v,1573089660,verilog,,,,glbl,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/adder.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/alu.v,,adder,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/alu.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/aludec.v,,alu,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/aludec.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/eqcmp.v,,aludec,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/eqcmp.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/flopenr.v,,eqcmp,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/flopenr.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/flopenrc.v,,flopenr,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/flopenrc.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/flopr.v,,flopenrc,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/flopr.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/floprc.v,,flopr,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/floprc.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/hazard.v,,floprc,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/hazard.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/maindec.v,,hazard,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/ip/data_mem/sim/data_mem.v,1672673671,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/ip/inst_mem/sim/inst_mem.v,,data_mem,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/ip/inst_mem/sim/inst_mem.v,1672673816,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/adder.v,,inst_mem,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/maindec.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/mips.v,,maindec,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/mips.v,1672674874,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/mux2.v,,mips,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/mux2.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/mux3.v,,mux2,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/mux3.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/pc.v,,mux3,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/pc.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/regfile.v,,pc,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/regfile.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/signext.v,,regfile,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/signext.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/sl2.v,,signext,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/sl2.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/top.v,,sl2,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/rtl/top.v,1672672269,verilog,,C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/sim/testbench.v,,top,,,,,,,,
+C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/sim/testbench.v,1672672269,verilog,,,,testbench,,,,,,,,
