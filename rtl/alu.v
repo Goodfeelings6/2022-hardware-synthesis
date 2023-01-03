@@ -18,37 +18,45 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
+`include "defines2.vh"
 
 module alu(
-	input wire[31:0] a,b,
-	input wire[2:0] op,
-	output reg[31:0] y,
-	output reg overflow,
-	output wire zero
+	input wire[31:0] a,b,  //操作数a,b
+	input wire [4:0] alu_controlE, 
+	input wire [4:0] sa,
+	output reg[31:0] result
+	// output reg overflow,
+	// output wire zero
     );
-
-	wire[31:0] s,bout;
-	assign bout = op[2] ? ~b : b;
-	assign s = a + bout + op[2];
+	reg carry; //溢出判断
 	always @(*) begin
-		case (op[1:0])
-			2'b00: y <= a & bout;
-			2'b01: y <= a | bout;
-			2'b10: y <= s;
-			2'b11: y <= s[31];
-			default : y <= 32'b0;
-		endcase	
-	end
-	assign zero = (y == 32'b0);
-
-	always @(*) begin
-		case (op[2:1])
-			2'b01:overflow <= a[31] & b[31] & ~s[31] |
-							~a[31] & ~b[31] & s[31];
-			2'b11:overflow <= ~a[31] & b[31] & s[31] |
-							a[31] & ~b[31] & ~s[31];
-			default : overflow <= 1'b0;
-		endcase	
-	end
+		carry = 0;
+        case(alu_controlE)
+			//逻辑运算8条
+			`AND_CONTROL   :  result = a & b;  //指令AND、ANDI
+			`OR_CONTROL    :  result = a | b;  //指令OR、ORI
+			`XOR_CONTROL   :  result = a ^ b;  //指令XOR
+			`NOR_CONTROL   :  result = ~(a | b);  //指令NOR、XORI
+			`LUI_CONTROL   :  result = {b[15:0],16'b0}; //指令LUI
+			//移位指令6条
+			`SLL_CONTROL   :  result = b << sa;  //指令SLL
+			`SRL_CONTROL   :  result = b >> sa;  //指令SRL
+			`SRA_CONTROL   :  result = $signed(b) >>> sa;  //指令SRL
+			`SLLV_CONTROL  :  result = b << a[4:0];  //指令SLLV
+			`SRLV_CONTROL  :  result = b >> a[4:0];  //指令SRLV
+			`SRAV_CONTROL  :  result = $signed(b) >>> a[4:0]; //指令SRAV
+			//算数运算指令14条
+			`ADD_CONTROL   :  {carry,result} = {a[31],a} + {b[31],b}; //指令ADD、ADDI
+			`ADDU_CONTROL  :  result = a + b; //指令ADDU、ADDIU
+			`SUB_CONTROL   :  {carry,result} = {a[31],a} - {b[31],b}; //指令SUB
+			`SUBU_CONTROL  :  result = a - b; //指令SUBU
+			`SLT_CONTROL   :  result = $signed(a) < $signed(b) ? 32'b1 : 32'b0;  //指令SLT、SLTI
+			`SLTU_CONTROL  :  result = a < b ? 32'b1 : 32'b0; //指令SLTU、SLTIU
+			`MULT_CONTROL  :  result = 0;
+			`MULTU_CONTROL :  result = 0;
+			`DIV_CONTROL   :  result = 0;
+			`DIVU_CONTROL  :  result = 0; 
+			default        :  result = `ZeroWord;
+		endcase
+    end
 endmodule
