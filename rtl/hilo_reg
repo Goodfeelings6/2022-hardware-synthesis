@@ -1,0 +1,24 @@
+module hilo_reg(
+	input wire clk,rst,
+	input wire we, //写使能
+	input wire[31:0] hi,lo, //输入
+	output wire[31:0] hi_out,lo_out //输出
+    );
+
+	reg [31:0] hi_reg; //HI寄存器
+	reg [31:0] lo_reg; //LO寄存器
+
+	always @(negedge clk) begin
+        if(rst)begin
+            hi_reg <= 0;
+            lo_reg <= 0;
+        end
+		else if(we) begin
+			 hi_reg <= hi;
+             lo_reg <= lo;
+		end
+	end
+
+	assign hi_out = hi_reg;
+	assign lo_out = lo_reg;
+endmodule
