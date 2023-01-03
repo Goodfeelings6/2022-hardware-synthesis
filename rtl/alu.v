@@ -21,9 +21,8 @@
 `include "defines2.vh"
 
 module alu(
-<<<<<<< HEAD
 	input wire[31:0] a,b,  //操作数a,b
-	input wire [4:0] alu_controlE, 
+	input wire [4:0] alucontrolE,
 	input wire [4:0] sa,
 	output reg[31:0] result
 	// output reg overflow,
@@ -33,7 +32,7 @@ module alu(
 	
 	always @(*) begin
 		carry = 0;
-        case(alu_controlE)
+        case(alucontrolE)
 			//逻辑运算8条
 			`AND_CONTROL   :  result = a & b;  //指令AND、ANDI
 			`OR_CONTROL    :  result = a | b;  //指令OR、ORI
