@@ -153,6 +153,9 @@
 `define MFC0_CONTROL 	5'b00101
 `define MTC0_CONTROL 	5'b00110
 
+`define USELESS_CONTROL 5'b00000
+
+>>>>>>> wzx
 //inst ROM macro definition
 `define InstAddrBus		31:0
 `define InstBus 		31:0

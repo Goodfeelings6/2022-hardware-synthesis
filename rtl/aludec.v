@@ -1,3 +1,4 @@
+`include "defines2.vh"
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
@@ -22,22 +23,52 @@
 
 module aludec(
 	input wire[5:0] funct,
-	input wire[1:0] aluop,
-	output reg[2:0] alucontrol
+	input wire[5:0] op,
+	output reg[4:0] alucontrol
     );
 	always @(*) begin
-		case (aluop)
-			2'b00: alucontrol <= 3'b010;//add (for lw/sw/addi)
-			2'b01: alucontrol <= 3'b110;//sub (for beq)
-			default : case (funct)
-				6'b100000:alucontrol <= 3'b010; //add
-				6'b100010:alucontrol <= 3'b110; //sub
-				6'b100100:alucontrol <= 3'b000; //and
-				6'b100101:alucontrol <= 3'b001; //or
-				6'b101010:alucontrol <= 3'b111; //slt
-				default:  alucontrol <= 3'b000;
-			endcase
+		case (op)
+			`R_TYPE:
+				case (funct)
+					//算术运算
+					`ADD:		alucontrol <= `ADD_CONTROL;
+					`ADDU:		alucontrol <= `ADDU_CONTROL;
+					`SUB:		alucontrol <= `SUB_CONTROL;
+					`SUBU:		alucontrol <= `SUBU_CONTROL;
+					`SLT:		alucontrol <= `SLT_CONTROL;
+					`SLTU:		alucontrol <= `SLTU_CONTROL;
+					`DIV:		alucontrol <= `DIV_CONTROL;
+					`DIVU:		alucontrol <= `DIVU_CONTROL;
+					`MULT:		alucontrol <= `MULT_CONTROL;
+					`MULTU:		alucontrol <= `MULTU_CONTROL;
+					//逻辑运算
+					`AND:		alucontrol <= `AND_CONTROL;
+					`NOR:		alucontrol <= `NOR_CONTROL;
+					`OR:		alucontrol <= `OR_CONTROL;
+					`XOR:		alucontrol <= `XOR_CONTROL;
+					//移位
+					`SLLV:		alucontrol <= `SLLV_CONTROL;
+					`SLL:		alucontrol <= `SLL_CONTROL;
+					`SRAV:		alucontrol <= `SRAV_CONTROL;
+					`SRA:		alucontrol <= `SRA_CONTROL;
+					`SRLV:		alucontrol <= `SRLV_CONTROL;
+					`SRL:		alucontrol <= `SRL_CONTROL;
+					default:    alucontrol <= `USELESS_CONTROL;
+				endcase
+			//I-type
+				//算术运算
+			`ADDI:		alucontrol <= `ADD_CONTROL;
+			`ADDIU:		alucontrol <= `ADDU_CONTROL;
+			`SLTI:		alucontrol <= `SLT_CONTROL;
+			`SLTIU:		alucontrol <= `SLTU_CONTROL;
+				//逻辑运算
+			`ANDI:		alucontrol <= `AND_CONTROL;
+			`LUI:		alucontrol <= `LUI_CONTROL;
+			`ORI:		alucontrol <= `OR_CONTROL;
+			`XORI:		alucontrol <= `XOR_CONTROL;
+				//访存
+			`LB, `LBU, `LH, `LHU, `LW, `SB, `SH, `SW:	alucontrol <= `ADDU_CONTROL;
+			default:    alucontrol <= `USELESS_CONTROL;
 		endcase
-	
 	end
 endmodule

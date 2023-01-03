@@ -21,6 +21,7 @@
 `include "defines2.vh"
 
 module alu(
+<<<<<<< HEAD
 	input wire[31:0] a,b,  //操作数a,b
 	input wire [4:0] alu_controlE, 
 	input wire [4:0] sa,
@@ -29,6 +30,7 @@ module alu(
 	// output wire zero
     );
 	reg carry; //溢出判断
+	
 	always @(*) begin
 		carry = 0;
         case(alu_controlE)
