@@ -22,7 +22,7 @@
 
 module alu(
 	input wire[31:0] a,b,
-	input wire[2:0] op,
+	input wire[4:0] op,
 	output reg[31:0] y,
 	output reg overflow,
 	output wire zero
@@ -38,7 +38,7 @@ module alu(
 			2'b10: y <= s;
 			2'b11: y <= s[31];
 			default : y <= 32'b0;
-		endcase	
+		endcase
 	end
 	assign zero = (y == 32'b0);
 

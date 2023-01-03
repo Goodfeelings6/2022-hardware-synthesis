@@ -33,15 +33,14 @@ module mips(
 	wire [5:0] opD,functD;
 	wire regdstE,alusrcE,pcsrcD,memtoregE,memtoregM,memtoregW,
 			regwriteE,regwriteM,regwriteW;
-	wire [2:0] alucontrolE;
+	wire [4:0] alucontrolE;
 	wire flushE,equalD;
 
 //----------------------------------------controler 模块begin------------------------------------------
 	//decode stage
-	wire[1:0] aluopD;
 	wire memtoregD,memwriteD,alusrcD,
 		regdstD,regwriteD;
-	wire[2:0] alucontrolD;
+	wire[4:0] alucontrolD;
 
 	//execute stage
 	wire memwriteE;
@@ -51,15 +50,14 @@ module mips(
 		memtoregD,memwriteD,
 		branchD,alusrcD,
 		regdstD,regwriteD,
-		jumpD,
-		aluopD
+		jumpD
 		);
-	aludec ad(functD,aluopD,alucontrolD);
+	aludec ad(functD,opD,alucontrolD);
 
 	assign pcsrcD = branchD & equalD;
 
 	//pipeline registers
-	floprc #(8) regE(
+	floprc #(10) regE(
 		clk,
 		rst,
 		flushE,
