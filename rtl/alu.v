@@ -56,7 +56,7 @@ module alu(
 			`MULT_CONTROL  :  result = 0;
 			`MULTU_CONTROL :  result = 0;
 			`DIV_CONTROL   :  result = 0;
-			`DIVU_CONTROL  :  result = 0; 
+			`DIVU_CONTROL  :  result = 0;
 			default        :  result = `ZeroWord;
 		endcase
     end
