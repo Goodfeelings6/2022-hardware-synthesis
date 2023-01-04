@@ -39,8 +39,8 @@ module mips(
 
 //----------------------------------------controler 模块begin------------------------------------------
 	//decode stage
-	wire memtoregD,memwriteD,alusrcD,
-		regdstD,regwriteD;
+	wire memtoregD,memwriteD,alusrcD,regwriteD;
+	wire[1:0] regdstD;
 	wire[4:0] alucontrolD;
 	wire hilo_writeD;//由maindec译码得来
 
@@ -49,6 +49,8 @@ module mips(
 
 	maindec md(
 		opD,
+		functD,
+		rtD,
 		memtoregD,memwriteD,
 		branchD,alusrcD,
 		regdstD,regwriteD,
@@ -170,9 +172,10 @@ module mips(
 	mux3 #(32) forwardaemux(srcaE,resultW,aluoutM,forwardaE,srca2E);
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
 	mux2 #(32) srcbmux(srcb2E,signimmE,alusrcE,srcb3E);
+
 	alu alu(srca2E,srcb3E,alucontrolE,saE,read_hiloE,write_hiloE,aluoutE);
 	hilo_reg hilo_reg(clk,rst,hilo_writeE,write_hiloE,read_hiloE);
-	mux2 #(5) wrmux(rtE,rdE,regdstE,writeregE);
+	mux3 #(5) wrmux(rtE,rdE,5'd31,regdstE,writeregE);
 
 	//mem stage
 	flopr #(32) r1M(clk,rst,srcb2E,writedataM);
