@@ -24,6 +24,8 @@ module alu(
 	input wire[31:0] a,b,  //操作数a,b
 	input wire [4:0] alucontrolE,
 	input wire [4:0] sa,
+	input wire [63:0] hilo_in, //读取的HI、LO寄存器的值
+	output reg[63:0] hilo_out, //用于写入HI、LO寄存器
 	output reg[31:0] result
 	// output reg overflow,
 	// output wire zero
@@ -57,6 +59,11 @@ module alu(
 			`MULTU_CONTROL :  result = 0;
 			`DIV_CONTROL   :  result = 0;
 			`DIVU_CONTROL  :  result = 0; 
+			//数据移动指令4条
+			`MFHI_CONTROL  :  result = hilo_in[63:32]; //指令MFHI
+			`MFLO_CONTROL  :  result = hilo_in[31:0]; //指令MFLO
+			`MTHI_CONTROL  :  hilo_out = {a,hilo_in[31:0]}; //指令MTHI
+			`MTLO_CONTROL  :  hilo_out = {hilo_in[31:0],a}; //指令MTLO
 			default        :  result = `ZeroWord;
 		endcase
     end
