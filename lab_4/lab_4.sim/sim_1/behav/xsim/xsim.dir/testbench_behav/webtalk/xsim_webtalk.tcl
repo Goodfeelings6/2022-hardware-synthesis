@@ -1,6 +1,6 @@
-webtalk_init -webtalk_dir C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/
+webtalk_init -webtalk_dir C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Mon Jan  2 23:55:55 2023" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Thu Jan  5 01:49:06 2023" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2019.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "2708876" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "WIN64" -context "software_version_and_target_device"
@@ -14,7 +14,7 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "3ec3eaf8-2209-4481-af2f-35802e8c8a8d" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "3bb9b409a0d644e9b607ef9d05d023cc" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "6" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "39" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Windows Server 2016 or Windows 10" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "major release  (build 9200)" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "AMD Ryzen 5 4600H with Radeon Graphics         " -context "user_environment"
@@ -24,9 +24,9 @@ webtalk_add_data -client project -key system_ram -value "16.000 GB" -context "us
 webtalk_register_client -client xsim
 webtalk_add_data -client xsim -key Command -value "xsim" -context "xsim\\command_line_options"
 webtalk_add_data -client xsim -key trace_waveform -value "true" -context "xsim\\usage"
-webtalk_add_data -client xsim -key runtime -value "630 ns" -context "xsim\\usage"
-webtalk_add_data -client xsim -key iteration -value "1" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Time -value "0.12_sec" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Memory -value "9108_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 743569859 -regid "" -xml C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/usage_statistics_ext_xsim.xml -html C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/usage_statistics_ext_xsim.html -wdm C:/Users/lenovo/Desktop/2022_hardware _synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_add_data -client xsim -key runtime -value "1 us" -context "xsim\\usage"
+webtalk_add_data -client xsim -key iteration -value "3" -context "xsim\\usage"
+webtalk_add_data -client xsim -key Simulation_Time -value "0.09_sec" -context "xsim\\usage"
+webtalk_add_data -client xsim -key Simulation_Memory -value "8596_KB" -context "xsim\\usage"
+webtalk_transmit -clientid 919393004 -regid "" -xml C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/usage_statistics_ext_xsim.xml -html C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/usage_statistics_ext_xsim.html -wdm C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate

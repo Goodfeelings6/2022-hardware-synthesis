@@ -63,7 +63,7 @@ module alu(
 			`MFHI_CONTROL  :  result = hilo_in[63:32]; //指令MFHI
 			`MFLO_CONTROL  :  result = hilo_in[31:0]; //指令MFLO
 			`MTHI_CONTROL  :  hilo_out = {a,hilo_in[31:0]}; //指令MTHI
-			`MTLO_CONTROL  :  hilo_out = {hilo_in[31:0],a}; //指令MTLO
+			`MTLO_CONTROL  :  hilo_out = {hilo_in[63:32],a}; //指令MTLO
 			default        :  result = `ZeroWord;
 		endcase
     end

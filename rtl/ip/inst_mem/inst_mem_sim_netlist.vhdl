@@ -1,10 +1,10 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
--- Date        : Mon Jan  2 23:38:06 2023
+-- Date        : Thu Jan  5 01:12:45 2023
 -- Host        : LAPTOP-RO40C96K running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim {C:/Users/lenovo/Desktop/2022_hardware
---               _synthesis/step_into_mips/rtl/ip/inst_mem/inst_mem_sim_netlist.vhdl}
+-- Command     : write_vhdl -force -mode funcsim
+--               C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem_sim_netlist.vhdl
 -- Design      : inst_mem
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -44,9 +44,9 @@ begin
       INITP_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INITP_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INITP_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
-      INIT_00 => X"0064202A10A7000C00A428200064282400E220252067FFF72003000C20020005",
-      INIT_01 => X"8C020050AC67004400E238220085382000E2202A200500000000000010800002",
-      INIT_02 => X"00000000000000000000000000000000AC020054200200010000000008000013",
+      INIT_00 => X"000020100060001100400011000000113C0400003C0305053C02FFFF3C010000",
+      INIT_01 => X"0000000000000000000000000000001E00002012002000130040001300600013",
+      INIT_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INIT_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INIT_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INIT_05 => X"0000000000000000000000000000000000000000000000000000000000000000",

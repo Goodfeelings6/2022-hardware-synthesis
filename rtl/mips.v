@@ -29,9 +29,10 @@ module mips(
 	input wire[31:0] readdataM 
     );
 
-	//连接controller 和 datapath
+	//连接controller �?? datapath
 	wire [5:0] opD,functD;
-	wire regdstE,alusrcE,pcsrcD,memtoregE,memtoregM,memtoregW,
+	wire [1:0] regdstE;
+	wire alusrcE,pcsrcD,memtoregE,memtoregM,memtoregW,
 			regwriteE,regwriteM,regwriteW;
 	wire [4:0] alucontrolE;
 	wire flushE,equalD;
@@ -54,14 +55,15 @@ module mips(
 		memtoregD,memwriteD,
 		branchD,alusrcD,
 		regdstD,regwriteD,
-		jumpD
+		jumpD,
+		hilo_writeD
 		);
 	aludec ad(functD,opD,alucontrolD);
 
 	assign pcsrcD = branchD & equalD;
 
 	//pipeline registers
-	floprc #(11) regE(
+	floprc #(12) regE(
 		clk,
 		rst,
 		flushE,

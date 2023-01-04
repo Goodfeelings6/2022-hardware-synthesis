@@ -49,11 +49,11 @@ module testbench();
 			if(dataadr === 84 & writedata === 7) begin
 				/* code */
 				$display("Simulation succeeded");
-				$stop;
+//				$stop;
 			end else if(dataadr !== 80) begin
 				/* code */
 				$display("Simulation Failed");
-				$stop;
+//				$stop;
 			end
 		end
 	end

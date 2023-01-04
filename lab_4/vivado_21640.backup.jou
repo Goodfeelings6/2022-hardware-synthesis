@@ -1,0 +1,21 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Tue Jan  3 18:46:53 2023
+# Process ID: 21640
+# Current directory: C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent24748 C:\Users\lenovo\Desktop\2022_hardware_synthesis\MyMipsCPU\lab_4\lab_4.xpr
+# Log file: C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/vivado.log
+# Journal file: C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.xpr
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/controller.v] -no_script -reset -force -quiet
+remove_files  C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/controller.v
+export_ip_user_files -of_objects  [get_files C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/datapath.v] -no_script -reset -force -quiet
+remove_files  C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/datapath.v
+update_compile_order -fileset sources_1
+add_files -norecurse C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/defines2.vh
+update_compile_order -fileset sources_1
