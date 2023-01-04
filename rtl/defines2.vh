@@ -155,7 +155,6 @@
 
 `define USELESS_CONTROL 5'b00000
 
->>>>>>> wzx
 //inst ROM macro definition
 `define InstAddrBus		31:0
 `define InstBus 		31:0

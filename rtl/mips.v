@@ -38,8 +38,8 @@ module mips(
 
 //----------------------------------------controler 模块begin------------------------------------------
 	//decode stage
-	wire memtoregD,memwriteD,alusrcD,
-		regdstD,regwriteD;
+	wire memtoregD,memwriteD,alusrcD,regwriteD;
+	wire[1:0] regdstD;
 	wire[4:0] alucontrolD;
 
 	//execute stage
@@ -47,6 +47,8 @@ module mips(
 
 	maindec md(
 		opD,
+		functD,
+		rtD,
 		memtoregD,memwriteD,
 		branchD,alusrcD,
 		regdstD,regwriteD,
@@ -57,7 +59,7 @@ module mips(
 	assign pcsrcD = branchD & equalD;
 
 	//pipeline registers
-	floprc #(10) regE(
+	floprc #(11) regE(
 		clk,
 		rst,
 		flushE,
@@ -166,7 +168,7 @@ module mips(
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
 	mux2 #(32) srcbmux(srcb2E,signimmE,alusrcE,srcb3E);
 	alu alu(srca2E,srcb3E,alucontrolE,aluoutE);
-	mux2 #(5) wrmux(rtE,rdE,regdstE,writeregE);
+	mux3 #(5) wrmux(rtE,rdE,5'd31,regdstE,writeregE);
 
 	//mem stage
 	flopr #(32) r1M(clk,rst,srcb2E,writedataM);
