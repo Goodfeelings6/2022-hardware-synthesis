@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="data_mem_synth_1" LaunchPart="xc7a100tfgg484-1" LaunchTime="1672673672">
+<GenRun Id="data_mem_synth_1" LaunchPart="xc7a100tfgg484-1" LaunchTime="1672941618">
   <File Type="PA-TCL" Name="data_mem.tcl"/>
   <File Type="REPORTS-TCL" Name="data_mem_reports.tcl"/>
   <File Type="RDS-RDS" Name="data_mem.vds"/>

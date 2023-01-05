@@ -25,12 +25,13 @@ module mips(
 	output wire[31:0] pcF,
 	input wire[31:0] instrF,
 	output wire memwriteM,
-	output wire[31:0] aluoutM,writedataM,
-	input wire[31:0] readdataM 
+	output wire[31:0] aluoutM,mem_write_dataM,
+	input wire[31:0] readdataM, 
+	output wire [3:0] mem_wenM
     );
 
-	//连接controller �?? datapath
-	wire [5:0] opD,functD;
+	//连接controller �?? datapath
+	wire [5:0] opD,opE,opM,functD;
 	wire [1:0] regdstE;
 	wire alusrcE,pcsrcD,memtoregE,memtoregM,memtoregW,
 			regwriteE,regwriteM,regwriteW;
@@ -104,6 +105,7 @@ module mips(
 	wire [63:0] read_hiloE,write_hiloE;//HILO读写
 	//mem stage
 	wire [4:0] writeregM;
+	wire [31:0] final_read_dataM,writedataM;
 	//writeback stage
 	wire [4:0] writeregW;
 	wire [31:0] aluoutW,readdataW,resultW;
@@ -170,6 +172,7 @@ module mips(
 	floprc #(5) r5E(clk,rst,flushE,rtD,rtE);
 	floprc #(5) r6E(clk,rst,flushE,rdD,rdE);
 	floprc #(5) r7E(clk,rst,flushE,saD,saE);
+	floprc #(6) r8E(clk,rst,flushE,opD,opE);
 
 	mux3 #(32) forwardaemux(srcaE,resultW,aluoutM,forwardaE,srca2E);
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
@@ -183,10 +186,12 @@ module mips(
 	flopr #(32) r1M(clk,rst,srcb2E,writedataM);
 	flopr #(32) r2M(clk,rst,aluoutE,aluoutM);
 	flopr #(5) r3M(clk,rst,writeregE,writeregM);
+	flopr #(6) r4M(clk,rst,opE,opM);
+	mem_ctrl mem_ctrl(opM,aluoutM,readdataM,final_read_dataM,writedataM,mem_write_dataM,mem_wenM);
 
 	//writeback stage
 	flopr #(32) r1W(clk,rst,aluoutM,aluoutW);
-	flopr #(32) r2W(clk,rst,readdataM,readdataW);
+	flopr #(32) r2W(clk,rst,final_read_dataM,readdataW);
 	flopr #(5) r3W(clk,rst,writeregM,writeregW);
 	mux2 #(32) resmux(aluoutW,readdataW,memtoregW,resultW);
 //----------------------------------------datapath 模块end------------------------------------------

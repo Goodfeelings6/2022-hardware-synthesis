@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/lenovo/Desktop/2022_hardware _synthesis/step_into_mips/lab_4/lab_4.runs/data_mem_synth_1'
+HD_PWD='C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.runs/data_mem_synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

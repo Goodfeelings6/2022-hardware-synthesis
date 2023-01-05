@@ -27,8 +27,9 @@ module top(
     );
 
 	wire[31:0] pc,instr,readdata;
+	wire[3:0] mem_wen;
 
-	mips mips(clk,rst,pc,instr,memwrite,dataadr,writedata,readdata);
+	mips mips(clk,rst,pc,instr,memwrite,dataadr,writedata,readdata,mem_wen);
 	inst_mem imem(~clk,pc[7:2],instr);
-	data_mem dmem(~clk,memwrite,dataadr,writedata,readdata);
+	data_mem dmem(~clk,mem_wen,dataadr,writedata,readdata);
 endmodule

@@ -13,6 +13,7 @@ verilog xil_defaultlib  --include "../../../../../rtl" \
 "../../../../../rtl/hazard.v" \
 "../../../../../rtl/hilo_reg.v" \
 "../../../../../rtl/maindec.v" \
+"../../../../../rtl/mem_ctrl.v" \
 "../../../../../rtl/mips.v" \
 "../../../../../rtl/mux2.v" \
 "../../../../../rtl/mux3.v" \
