@@ -1,7 +1,7 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-// Date        : Fri Jan  6 02:01:43 2023
+// Date        : Fri Jan  6 16:41:31 2023
 // Host        : LAPTOP-RO40C96K running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/data_mem/data_mem_stub.v

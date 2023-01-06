@@ -1,10 +1,10 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
--- Date        : Fri Jan  6 16:41:31 2023
+-- Date        : Fri Jan  6 16:41:30 2023
 -- Host        : LAPTOP-RO40C96K running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub
---               C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/data_mem/data_mem_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
+--               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ data_mem_stub.vhdl
 -- Design      : data_mem
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a100tfgg484-1
@@ -12,7 +12,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity data_mem is
+entity decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix is
   Port ( 
     clka : in STD_LOGIC;
     wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
@@ -21,9 +21,9 @@ entity data_mem is
     douta : out STD_LOGIC_VECTOR ( 31 downto 0 )
   );
 
-end data_mem;
+end decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix;
 
-architecture stub of data_mem is
+architecture stub of decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix is
 attribute syn_black_box : boolean;
 attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
