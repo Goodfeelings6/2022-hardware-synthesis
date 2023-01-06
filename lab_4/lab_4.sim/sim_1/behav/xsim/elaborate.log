@@ -4,17 +4,17 @@ Running: D:/vivado/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto 3bb9b409a0
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 3 differs from formal bit length 8 for port 'd' [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:76]
-WARNING: [VRFC 10-3091] actual bit length 3 differs from formal bit length 8 for port 'q' [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:77]
-WARNING: [VRFC 10-3091] actual bit length 2 differs from formal bit length 8 for port 'd' [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:81]
-WARNING: [VRFC 10-3091] actual bit length 2 differs from formal bit length 8 for port 'q' [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:82]
+WARNING: [VRFC 10-3091] actual bit length 3 differs from formal bit length 8 for port 'd' [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:77]
+WARNING: [VRFC 10-3091] actual bit length 3 differs from formal bit length 8 for port 'q' [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:78]
+WARNING: [VRFC 10-3091] actual bit length 2 differs from formal bit length 8 for port 'd' [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:82]
+WARNING: [VRFC 10-3091] actual bit length 2 differs from formal bit length 8 for port 'q' [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:83]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
 Compiling module xil_defaultlib.maindec
 Compiling module xil_defaultlib.aludec
-Compiling module xil_defaultlib.floprc(WIDTH=12)
+Compiling module xil_defaultlib.flopenrc(WIDTH=12)
 Compiling module xil_defaultlib.flopr
 Compiling module xil_defaultlib.hazard
 Compiling module xil_defaultlib.mux2(WIDTH=32)
@@ -26,10 +26,10 @@ Compiling module xil_defaultlib.flopenrc(WIDTH=32)
 Compiling module xil_defaultlib.signext
 Compiling module xil_defaultlib.sl2
 Compiling module xil_defaultlib.eqcmp
-Compiling module xil_defaultlib.floprc(WIDTH=32)
-Compiling module xil_defaultlib.floprc(WIDTH=5)
-Compiling module xil_defaultlib.floprc(WIDTH=6)
+Compiling module xil_defaultlib.flopenrc(WIDTH=5)
+Compiling module xil_defaultlib.flopenrc(WIDTH=6)
 Compiling module xil_defaultlib.mux3(WIDTH=32)
+Compiling module xil_defaultlib.div
 Compiling module xil_defaultlib.alu
 Compiling module xil_defaultlib.hilo_reg
 Compiling module xil_defaultlib.mux3(WIDTH=5)

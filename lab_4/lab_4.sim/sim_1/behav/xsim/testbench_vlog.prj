@@ -5,11 +5,11 @@ verilog xil_defaultlib  --include "../../../../../rtl" \
 "../../../../../rtl/adder.v" \
 "../../../../../rtl/alu.v" \
 "../../../../../rtl/aludec.v" \
+"../../../../../rtl/div.v" \
 "../../../../../rtl/eqcmp.v" \
 "../../../../../rtl/flopenr.v" \
 "../../../../../rtl/flopenrc.v" \
 "../../../../../rtl/flopr.v" \
-"../../../../../rtl/floprc.v" \
 "../../../../../rtl/hazard.v" \
 "../../../../../rtl/hilo_reg.v" \
 "../../../../../rtl/maindec.v" \

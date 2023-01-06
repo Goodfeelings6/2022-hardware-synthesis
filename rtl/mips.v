@@ -64,9 +64,10 @@ module mips(
 	assign pcsrcD = branchD & equalD;
 
 	//pipeline registers
-	floprc #(12) regE(
+	flopenrc #(12) regE(
 		clk,
 		rst,
+		~stallE,
 		flushE,
 		{memtoregD,memwriteD,alusrcD,regdstD,regwriteD,alucontrolD,hilo_writeD},
 		{memtoregE,memwriteE,alusrcE,regdstE,regwriteE,alucontrolE,hilo_writeE}
@@ -102,7 +103,11 @@ module mips(
 	wire [31:0] signimmE;
 	wire [31:0] srcaE,srca2E,srcbE,srcb2E,srcb3E;
 	wire [31:0] aluoutE;
-	wire [63:0] read_hiloE,write_hiloE;//HILO读写
+	wire [63:0] read_hiloE,write_hiloE;//HILO读写数据
+	wire hilo_write2E; //考虑了除法后的hilo寄存器写信号
+	wire div_readyE; //除法运算是否完成
+	wire div_stallE; //除法导致的流水线暂停控制
+	wire stallE; //Ex阶段暂停控制信号
 	//mem stage
 	wire [4:0] writeregM;
 	wire [31:0] final_read_dataM,writedataM;
@@ -124,8 +129,10 @@ module mips(
 		writeregE,
 		regwriteE,
 		memtoregE,
+		div_stallE,
 		forwardaE,forwardbE,
 		flushE,
+		stallE,
 		//mem stage
 		writeregM,
 		regwriteM,
@@ -165,21 +172,22 @@ module mips(
 	assign saD = instrD[10:6];
 
 	//execute stage
-	floprc #(32) r1E(clk,rst,flushE,srcaD,srcaE);
-	floprc #(32) r2E(clk,rst,flushE,srcbD,srcbE);
-	floprc #(32) r3E(clk,rst,flushE,signimmD,signimmE);
-	floprc #(5) r4E(clk,rst,flushE,rsD,rsE);
-	floprc #(5) r5E(clk,rst,flushE,rtD,rtE);
-	floprc #(5) r6E(clk,rst,flushE,rdD,rdE);
-	floprc #(5) r7E(clk,rst,flushE,saD,saE);
-	floprc #(6) r8E(clk,rst,flushE,opD,opE);
+	flopenrc #(32) r1E(clk,rst,~stallE,flushE,srcaD,srcaE);
+	flopenrc #(32) r2E(clk,rst,~stallE,flushE,srcbD,srcbE);
+	flopenrc #(32) r3E(clk,rst,~stallE,flushE,signimmD,signimmE);
+	flopenrc #(5) r4E(clk,rst,~stallE,flushE,rsD,rsE);
+	flopenrc #(5) r5E(clk,rst,~stallE,,rtD,rtE);
+	flopenrc #(5) r6E(clk,rst,~stallE,flushE,rdD,rdE);
+	flopenrc #(5) r7E(clk,rst,~stallE,flushE,saD,saE);
+	flopenrc #(6) r8E(clk,rst,~stallE,flushE,opD,opE);
 
 	mux3 #(32) forwardaemux(srcaE,resultW,aluoutM,forwardaE,srca2E);
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
 	mux2 #(32) srcbmux(srcb2E,signimmE,alusrcE,srcb3E);
 
-	alu alu(srca2E,srcb3E,alucontrolE,saE,read_hiloE,write_hiloE,aluoutE);
-	hilo_reg hilo_reg(clk,rst,hilo_writeE,write_hiloE,read_hiloE);
+	alu alu(clk,rst,srca2E,srcb3E,alucontrolE,saE,read_hiloE,write_hiloE,aluoutE,div_readyE,div_stallE);
+	assign hilo_write2E = (alucontrolE == `DIV_CONTROL) ? (div_readyE & hilo_writeE) : (hilo_writeE); 
+	hilo_reg hilo_reg(clk,rst,hilo_write2E,write_hiloE,read_hiloE);
 	mux3 #(5) wrmux(rtE,rdE,5'd31,regdstE,writeregE);
 
 	//mem stage
