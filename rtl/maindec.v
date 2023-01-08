@@ -29,11 +29,13 @@ module maindec(
 	output wire[1:0] regdst,
 	output wire regwrite,
 	output wire jump,
-	output wire hilo_write
+	output wire hilo_write,
+	output wire is_invalid
     );
 	reg[8:0] controls;
 	assign {regwrite,regdst,alusrc,branch,memwrite,memtoreg,jump,hilo_write} = controls;
 	always @(*) begin
+		is_invalid <= 1'b0;
 		case (op)
 			`R_TYPE:
 				case (funct)
@@ -45,7 +47,10 @@ module maindec(
 					`MTHI,`MTLO:						controls <= 9'b000000001;
 					`JR:								controls <= 9'b000000010;
 					`JALR:								controls <= 9'b101000010;
-					default:    controls <= 9'b000000000;
+					default:  begin
+						controls <= 9'b000000000;
+						is_invalid <= 1'b1;
+					end
 				endcase
 			// I-type
 			`ADDI,`ADDIU,`SLTI,`SLTIU,
@@ -55,14 +60,20 @@ module maindec(
 				case (rt)
 					`BGEZ,`BLTZ:		controls <= 9'b000010000;
 					`BGEZAL,`BLTZAL:	controls <= 9'b110010000;
-					default:    controls <= 9'b000000000;
+					default:  begin
+						controls <= 9'b000000000;
+						is_invalid <= 1'b1;
+					end
 				endcase
 			`LB,`LBU,`LH,`LHU,`LW:		controls <= 9'b100100100;
 			`SB,`SH,`SW:				controls <= 9'b000101000;
 			// J-type
 			`J:		controls <= 9'b000000010;
 			`JAL:	controls <= 9'b110000010;
-			default:	controls <= 9'b000000000;
+			default:  begin
+					controls <= 9'b000000000;
+					is_invalid <= 1'b1;
+			end
 		endcase
 	end
 endmodule

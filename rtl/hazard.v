@@ -35,12 +35,15 @@ module hazard(
 	input wire memtoregE,
 	input wire div_stallE,
 	output reg[1:0] forwardaE,forwardbE,
+	output wire flushD,
 	output wire flushE,
+	output wire flushM,
 	output wire stallE,
 	//mem stage
 	input wire[4:0] writeregM,
 	input wire regwriteM,
 	input wire memtoregM,
+	input wire is_exceptM,
 
 	//write back stage
 	input wire[4:0] writeregW,
@@ -81,19 +84,17 @@ module hazard(
 	end
 
 	//stalls
-	assign #1 lwstallD = memtoregE & (rtE == rsD | rtE == rtD);
-	assign #1 branchstallD = branchD &
+	assign lwstallD = memtoregE & (rtE == rsD | rtE == rtD);
+	assign branchstallD = branchD &
 				(regwriteE & 
 				(writeregE == rsD | writeregE == rtD) |
 				memtoregM &
 				(writeregM == rsD | writeregM == rtD));
-	assign #1 stallD = lwstallD | branchstallD | div_stallE;
-	assign #1 stallF = stallD; //stalling D stalls all previous stages
-	assign #1 flushE = lwstallD | branchstallD; //stalling D flushes next stage
-	assign #1 stallE = div_stallE; //执行除法时EX阶段暂停
+	assign stallD = lwstallD | branchstallD | div_stallE;
+	assign stallF = stallD; //stalling D stalls all previous stages
+	assign stallE = div_stallE; //执行除法时EX阶段暂停
 	
-	// Note: not necessary to stall D stage on store
-  	//       if source comes from load;
-  	//       instead, another bypass network could
-  	//       be added from W to M
+	assign flushD = is_exceptM;
+	assign flushE = lwstallD | branchstallD | is_exceptM; //stalling D flushes next stage
+	assign flushM = is_exceptM | div_stallE;
 endmodule

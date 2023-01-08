@@ -26,14 +26,14 @@ module alu(
 	input wire [4:0] alucontrolE,
 	input wire [4:0] sa,
 	input wire [63:0] hilo_in, //读取的HI、LO寄存器的值
+	input wire [31:0] cp0_rdata, //读取的CP0寄存器的值
 	output reg[63:0] hilo_out, //用于写入HI、LO寄存器
 	output reg[31:0] result,
 	output wire div_ready,  //除法是否完成
-	output reg div_stall   //除法的流水线暂停控制
-	// output reg overflow,
+	output reg div_stall,   //除法的流水线暂停控制
+	output reg overflow     //溢出判断
 	// output wire zero
     );
-	reg carry; //溢出判断
 
 	//div
 	reg div_start;
@@ -43,7 +43,7 @@ module alu(
 	always @(*) begin
 		if(rst)
 			div_stall = 1'b0;
-		carry = 0;
+		overflow = 0;
         case(alucontrolE)
 			//逻辑运算8条
 			`AND_CONTROL   :  result = a & b;  //指令AND、ANDI
@@ -59,9 +59,9 @@ module alu(
 			`SRLV_CONTROL  :  result = b >> a[4:0];  //指令SRLV
 			`SRAV_CONTROL  :  result = $signed(b) >>> a[4:0]; //指令SRAV
 			//算数运算指令14条
-			`ADD_CONTROL   :  {carry,result} = {a[31],a} + {b[31],b}; //指令ADD、ADDI
+			`ADD_CONTROL   :  {overflow,result} = {a[31],a} + {b[31],b}; //指令ADD、ADDI
 			`ADDU_CONTROL  :  result = a + b; //指令ADDU、ADDIU
-			`SUB_CONTROL   :  {carry,result} = {a[31],a} - {b[31],b}; //指令SUB
+			`SUB_CONTROL   :  {overflow,result} = {a[31],a} - {b[31],b}; //指令SUB
 			`SUBU_CONTROL  :  result = a - b; //指令SUBU
 			`SLT_CONTROL   :  result = $signed(a) < $signed(b) ? 32'b1 : 32'b0;  //指令SLT、SLTI
 			`SLTU_CONTROL  :  result = a < b ? 32'b1 : 32'b0; //指令SLTU、SLTIU
@@ -108,6 +108,9 @@ module alu(
 			`MFLO_CONTROL  :  result = hilo_in[31:0]; //指令MFLO
 			`MTHI_CONTROL  :  hilo_out = {a,hilo_in[31:0]}; //指令MTHI
 			`MTLO_CONTROL  :  hilo_out = {hilo_in[63:32],a}; //指令MTLO
+			//读写CP0
+			`MFC0_CONTROL  :  result = cp0_rdata;
+			`MTC0_CONTROL  :  result = b;
 			default        :  result = `ZeroWord;
 		endcase
     end
