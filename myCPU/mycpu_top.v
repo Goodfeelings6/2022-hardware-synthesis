@@ -21,7 +21,7 @@ module mycpu_top(
     output [31:0] debug_wb_rf_wdata
 );
 
-// ä¸?ä¸ªä¾‹å­?
+
 	wire [31:0] pc;
 	wire [31:0] instr;
 	wire memwrite;
