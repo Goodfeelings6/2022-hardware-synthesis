@@ -41,6 +41,7 @@ module mips(
 	wire is_invalidM; //保留指令
 	wire [5:0] ext_int;//硬件中断位
 	assign ext_int = 6'b000000;
+	wire cp0_writeM; //cp0寄存器写信号
 
 //----------------------------------------controler 模块begin------------------------------------------
 	//decode stage
@@ -49,9 +50,11 @@ module mips(
 	wire[4:0] alucontrolD;
 	wire hilo_writeD;//由maindec译码得来
 	wire is_invalidD,is_invalidE; //maindec译码得来，无效指令标识
+	wire jbralD,jrD,cp0_writeD;
 
 	//execute stage
 	wire memwriteE;
+	wire jbralE,cp0_writeE;
 
 	maindec md(
 		opD,
@@ -62,6 +65,9 @@ module mips(
 		regdstD,regwriteD,
 		jumpD,
 		hilo_writeD,
+		jbralD,
+		jrD,
+		cp0_writeD,
 		is_invalidD
 		);
 	aludec ad(functD,opD,alucontrolD);
@@ -74,13 +80,13 @@ module mips(
 		rst,
 		~stallE,
 		flushE,
-		{memtoregD,memwriteD,alusrcD,regdstD,regwriteD,alucontrolD,hilo_writeD,is_invalidD},
-		{memtoregE,memwriteE,alusrcE,regdstE,regwriteE,alucontrolE,hilo_writeE,is_invalidE}
+		{memtoregD,memwriteD,alusrcD,regdstD,regwriteD,alucontrolD,hilo_writeD,jbralD,cp0_writeD,is_invalidD},
+		{memtoregE,memwriteE,alusrcE,regdstE,regwriteE,alucontrolE,hilo_writeE,jbralE,cp0_writeE,is_invalidE}
 		);
 	floprc #(8) regM(
 		clk,rst,flushM,
-		{memtoregE,memwriteE,regwriteE,is_invalidE},
-		{memtoregM,memwriteM,regwriteM,is_invalidM}
+		{memtoregE,memwriteE,regwriteE,cp0_writeE,is_invalidE},
+		{memtoregM,memwriteM,regwriteM,cp0_writeM,is_invalidM}
 		);
 	flopr #(8) regW(
 		clk,rst,
@@ -93,6 +99,7 @@ module mips(
 	//fetch stage
 	wire stallF;
 	wire is_AdEL_pcF;
+	wire is_in_delayslotF; //当前指令是否在延迟槽
 	//FD
 	wire [31:0] pcnextFD,pcnextbrFD,pcplus4F,pcbranchD,pcnextF;
 	//decode stage
@@ -103,6 +110,7 @@ module mips(
 	wire [31:0] signimmD,signimmshD;
 	wire [31:0] srcaD,srca2D,srcbD,srcb2D;
 	wire is_AdEL_pcD,is_syscallD,is_breakD,is_eretD; //例外标记
+	wire is_in_delayslotD; 
 	wire [31:0] pcD;
 	wire [4:0] cp0_waddrD; //cp0写地址，指令MTC0
 	wire [4:0] cp0_raddrD; //cp0读地址，指令MFC0
@@ -120,6 +128,7 @@ module mips(
 	wire div_stallE; //除法导致的流水线暂停控制
 	wire stallE; //Ex阶段暂停控制信号
 	wire is_AdEL_pcE,is_syscallE,is_breakE,is_eretE,is_overflowE; //例外标记
+	wire is_in_delayslotE;
 	wire [31:0] pcE;
 	wire [4:0] cp0_waddrE;
 	wire [4:0] cp0_raddrE;
@@ -129,13 +138,14 @@ module mips(
 	wire [4:0] writeregM;
 	wire [31:0] final_read_dataM,writedataM;
 	wire is_AdEL_pcM,is_syscallM,is_breakM,is_eretM,is_AdEL_dataM,is_AdESM,is_overflowM; //例外标记
+	wire is_in_delayslotM;
 	wire [31:0] pcM;
 	wire [4:0] cp0_waddrM;
 	wire [4:0] cp0_raddrM;
 	wire is_exceptM;
 	wire [31:0] except_typeM;
 	wire [31:0] except_pcM;
-	wire [31:0] cp0_causeM,cp0_epcM;
+	wire [31:0] cp0_statusM,cp0_causeM,cp0_epcM;
 
 	//writeback stage
 	wire [4:0] writeregW;
@@ -186,12 +196,14 @@ module mips(
 	adder pcadd1(pcF,32'b100,pcplus4F);
 
 	assign is_AdEL_pcF = ~(pcF[1:0] == 2'b00);
+	assign is_in_delayslotF = jumpD | branchD | jbralD | jrD;
 
 	//decode stage
 	flopenrc #(32) r1D(clk,rst,~stallD,flushD,pcplus4F,pcplus4D);
 	flopenrc #(32) r2D(clk,rst,~stallD,flushD,instrF,instrD);
-	flopenrc #(32) r3D(clk,rst,~stallD,flushD,is_AdEL_pcF,is_AdEL_pcD);
-	flopenrc #(32) r4D(clk,rst,~stallD,flushD,pcF,pcD);
+	flopenrc #(1) r3D(clk,rst,~stallD,flushD,is_AdEL_pcF,is_AdEL_pcD);
+	flopenrc #(1) r4D(clk,rst,~stallD,flushD,is_in_delayslotF,is_in_delayslotD);
+	flopenrc #(32) r5D(clk,rst,~stallD,flushD,pcF,pcD);
 
 	signext se(instrD[15:0],opD[3:2],signimmD);
 	sl2 immsh(signimmD,signimmshD);
@@ -225,10 +237,11 @@ module mips(
 	flopenrc #(4) r9E(clk,rst,~stallE,flushE,
 		{is_AdEL_pcD,is_syscallD,is_breakD,is_eretD},
 		{is_AdEL_pcE,is_syscallE,is_breakE,is_eretE});
-	flopenrc #(32) r10E(clk,rst,~stallE,flushE,pcD,pcE);
-	flopenrc #(5) r11E(clk,rst,~stallE,flushE,cp0_waddrD,cp0_waddrE);
-	flopenrc #(5) r12E(clk,rst,~stallE,flushE,cp0_raddrD,cp0_raddrE);
-
+	flopenrc #(1) r10E(clk,rst,~stallE,flushE,is_in_delayslotD,is_in_delayslotE);
+	flopenrc #(32) r11E(clk,rst,~stallE,flushE,pcD,pcE);
+	flopenrc #(5) r12E(clk,rst,~stallE,flushE,cp0_waddrD,cp0_waddrE);
+	flopenrc #(5) r13E(clk,rst,~stallE,flushE,cp0_raddrD,cp0_raddrE);
+	
 	mux3 #(32) forwardaemux(srcaE,resultW,aluoutM,forwardaE,srca2E);
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
 	mux2 #(32) srcbmux(srcb2E,signimmE,alusrcE,srcb3E);
@@ -249,16 +262,18 @@ module mips(
 	floprc #(5) r5M(clk,rst,flushM,
 		{is_AdEL_pcE,is_syscallE,is_breakE,is_eretE,is_overflowE},
 		{is_AdEL_pcM,is_syscallM,is_breakM,is_eretM,is_overflowM});
-	floprc #(32) r6M(clk,rst,flushM,pcE,pcM);
-	floprc #(5) r7M(clk,rst,flushM,cp0_waddrE,cp0_waddrM);
-	floprc #(5) r8M(clk,rst,flushM,cp0_raddrE,cp0_raddrM);
-
+	floprc #(1) r6M(clk,rst,flushM,is_in_delayslotE,is_in_delayslotM);
+	floprc #(32) r7M(clk,rst,flushM,pcE,pcM);
+	floprc #(5) r8M(clk,rst,flushM,cp0_waddrE,cp0_waddrM);
+	floprc #(5) r9M(clk,rst,flushM,cp0_raddrE,cp0_raddrM);
+	
 	mem_ctrl mem_ctrl(opM,aluoutM,readdataM,final_read_dataM,writedataM,mem_write_dataM,mem_wenM,is_AdEL_dataM,is_AdESM);
 	exceptdec exceptdec(
 		//input
 		.clk(clk),              
 		.rst(rst),              
-		.ext_int(ext_int),     
+		.ext_int(ext_int),   
+		.cp0_status(cp0_statusM),  
 		.cp0_cause(cp0_causeM),  
 		.cp0_epc(cp0_epcM),    
 		.is_syscallM(is_syscallM),      
@@ -279,20 +294,20 @@ module mips(
 		//input
 		.clk(clk),                          
 		.rst(rst),
-		.we_i(cp0_writeM),     maindec产生
+		.we_i(cp0_writeM),    
 		.waddr_i(cp0_waddrM),
 		.raddr_i(cp0_raddrM),
 		.data_i(aluoutM),
 		.int_i(ext_int),
 		.excepttype_i(except_typeM),
 		.current_inst_addr_i(pcM),
-		.is_in_delayslot_i(),
+		.is_in_delayslot_i(is_in_delayslotM),
 		.bad_addr_i(bad_addrM),
 		//output
 		.data_o(cp0_rdataE),
 		// .count_o(),
 		// .compare_o(),
-		// .status_o(),
+		.status_o(cp0_statusM), //用于判断中断
 		.cause_o(cp0_causeM), //用于判断中断
 		.epc_o(cp0_epcM)  //用于ERET
 		// .config_o(),

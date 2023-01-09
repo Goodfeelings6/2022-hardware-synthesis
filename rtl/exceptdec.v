@@ -5,6 +5,7 @@ module exceptdec(
     input wire clk,                //时钟信号
     input wire rst,                //复位信号
     input wire[5:0] ext_int,       //cpu外部传入，判断硬件中断
+    input wire[31:0] cp0_status,   //CP0的Status寄存器值，判断中断是否屏蔽、全局中断是否使能、处理器是否处于例外处理
     input wire[31:0] cp0_cause,    //CP0的Cause寄存器值，判断软件中断
     input wire[31:0] cp0_epc,      //CP0的Epc寄存器值
     input wire is_syscallM,        //SYSCALL指令
@@ -27,7 +28,9 @@ module exceptdec(
             except_type <= 32'b0;
             except_pc <= 32'b0;
         end else begin
-            if()begin //软硬件中断
+            if((cp0_status[15:8] & {ext_int,cp0_cause[9:8]}) != 8'h00 &
+                    (cp0_status[1] == 1'b0) & cp0_status[0] == 1'b1)begin 
+                //软硬件中断
                 is_except <= 1'b1;
                 except_type <= 32'h00000001;
                 except_pc <= 32'hBFC00380;    
