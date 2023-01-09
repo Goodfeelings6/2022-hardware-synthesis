@@ -1,0 +1,82 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Wed Jan  4 23:47:19 2023
+# Process ID: 31548
+# Current directory: C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent30392 C:\Users\lenovo\Desktop\2022_hardware_synthesis\MyMipsCPU\lab_4\lab_4.xpr
+# Log file: C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/vivado.log
+# Journal file: C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.xpr
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+add_files -norecurse C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/hilo_reg.v
+update_compile_order -fileset sources_1
+set_property -dict [list CONFIG.Coe_File {C:/Users/lenovo/Desktop/2022_hardware_synthesis/CO-lab-material-CQU/vivado/lab4/funcTest_independent/LogicInstTest/obj/inst_ram.coe}] [get_ips inst_mem]
+generate_target all [get_files  C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci]
+catch { config_ip_cache -export [get_ips -all inst_mem] }
+export_ip_user_files -of_objects [get_files C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci] -no_script -sync -force -quiet
+reset_run inst_mem_synth_1
+launch_runs -jobs 6 inst_mem_synth_1
+export_simulation -of_objects [get_files C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci] -directory C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files/sim_scripts -ip_user_files_dir C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files -ipstatic_source_dir C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files/ipstatic -lib_map_path [list {modelsim=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/modelsim} {questa=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/questa} {riviera=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/riviera} {activehdl=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+launch_simulation
+source testbench.tcl
+current_wave_config {Untitled 1}
+add_wave {{/testbench/dut/mips/rf/rf}} 
+run all
+relaunch_sim
+relaunch_sim
+run all
+relaunch_sim
+close_sim
+launch_simulation
+source testbench.tcl
+run all
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+close_sim
+launch_simulation
+launch_simulation
+launch_simulation
+source testbench.tcl
+relaunch_sim
+close_sim
+set_property -dict [list CONFIG.Coe_File {C:/Users/lenovo/Desktop/2022_hardware_synthesis/CO-lab-material-CQU/vivado/lab4/funcTest_independent/ShiftInstTest/obj/inst_ram.coe}] [get_ips inst_mem]
+generate_target all [get_files  C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci]
+catch { config_ip_cache -export [get_ips -all inst_mem] }
+export_ip_user_files -of_objects [get_files C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci] -no_script -sync -force -quiet
+reset_run inst_mem_synth_1
+launch_runs -jobs 6 inst_mem_synth_1
+export_simulation -of_objects [get_files C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci] -directory C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files/sim_scripts -ip_user_files_dir C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files -ipstatic_source_dir C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files/ipstatic -lib_map_path [list {modelsim=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/modelsim} {questa=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/questa} {riviera=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/riviera} {activehdl=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+launch_simulation
+source testbench.tcl
+relaunch_sim
+close_sim
+set_property -dict [list CONFIG.Coe_File {C:/Users/lenovo/Desktop/2022_hardware_synthesis/CO-lab-material-CQU/vivado/lab4/funcTest_independent/DataMoveInstTest/obj/inst_ram.coe}] [get_ips inst_mem]
+generate_target all [get_files  C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci]
+catch { config_ip_cache -export [get_ips -all inst_mem] }
+export_ip_user_files -of_objects [get_files C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci] -no_script -sync -force -quiet
+reset_run inst_mem_synth_1
+launch_runs -jobs 6 inst_mem_synth_1
+export_simulation -of_objects [get_files C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem.xci] -directory C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files/sim_scripts -ip_user_files_dir C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files -ipstatic_source_dir C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.ip_user_files/ipstatic -lib_map_path [list {modelsim=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/modelsim} {questa=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/questa} {riviera=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/riviera} {activehdl=C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/lab_4/lab_4.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+launch_simulation
+source testbench.tcl
+relaunch_sim
+close_sim
+launch_simulation
+source testbench.tcl
+relaunch_sim
+relaunch_sim
+close_sim
+launch_simulation
+source testbench.tcl
+relaunch_sim
+close_sim

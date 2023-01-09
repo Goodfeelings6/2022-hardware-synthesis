@@ -5,7 +5,7 @@ Algorithm                  :     Minimum_Area
 Memory Type                :     Single_Port_ROM
 Port A Read Width          :     [32]
 Port A Write Width         :     [32]
-Memory Depth               :     [64]
+Memory Depth               :     [99]
 
 ----------------------------------------------------------------------------------
 

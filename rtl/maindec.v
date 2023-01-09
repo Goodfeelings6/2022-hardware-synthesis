@@ -23,6 +23,7 @@
 module maindec(
 	input wire[5:0] op,
 	input wire[5:0] funct,
+	input wire[4:0] rs,
 	input wire[4:0] rt,
 	output wire memtoreg,memwrite,
 	output wire branch,alusrc,
@@ -33,7 +34,7 @@ module maindec(
 	output wire jbral,
 	output wire jr,
 	output wire cp0_write,
-	output wire is_invalid
+	output reg is_invalid
     );
 	reg[11:0] controls;
 	assign {regwrite,regdst,alusrc,branch,memwrite,memtoreg,jump,hilo_write,jbral,jr,cp0_write} = controls;

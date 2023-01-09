@@ -8,16 +8,20 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardwa
 INFO: [VRFC 10-311] analyzing module alu
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/aludec.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module aludec
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/cp0_reg.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cp0_reg
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/div.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module div
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/eqcmp.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module eqcmp
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/flopenr.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module flopenr
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/exceptdec.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module exceptdec
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/flopenrc.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module flopenrc
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/flopr.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module flopr
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/floprc.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floprc
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/hazard.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module hazard
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/hilo_reg.v" into library xil_defaultlib
@@ -28,12 +32,15 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardwa
 INFO: [VRFC 10-311] analyzing module mem_ctrl
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module mips
-INFO: [VRFC 10-2458] undeclared symbol rtD, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:55]
-INFO: [VRFC 10-2458] undeclared symbol branchD, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:57]
-INFO: [VRFC 10-2458] undeclared symbol jumpD, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:59]
-INFO: [VRFC 10-2458] undeclared symbol stallE, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:70]
-WARNING: [VRFC 10-2938] 'rtD' is already implicitly declared on line 55 [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:95]
-WARNING: [VRFC 10-2938] 'stallE' is already implicitly declared on line 70 [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:110]
+INFO: [VRFC 10-2458] undeclared symbol rsD, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:62]
+INFO: [VRFC 10-2458] undeclared symbol rtD, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:63]
+INFO: [VRFC 10-2458] undeclared symbol branchD, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:65]
+INFO: [VRFC 10-2458] undeclared symbol jumpD, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:67]
+INFO: [VRFC 10-2458] undeclared symbol stallE, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:82]
+WARNING: [VRFC 10-2938] 'rsD' is already implicitly declared on line 62 [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:109]
+WARNING: [VRFC 10-2938] 'stallE' is already implicitly declared on line 82 [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:130]
+INFO: [VRFC 10-2458] undeclared symbol cp0_rdata2E, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:254]
+INFO: [VRFC 10-2458] undeclared symbol bad_addrM, assumed default net type wire [C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mips.v:297]
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mux2.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module mux2
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/mux3.v" into library xil_defaultlib

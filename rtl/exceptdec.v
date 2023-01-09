@@ -17,7 +17,7 @@ module exceptdec(
     input wire is_overflowM,       //是否整型溢出
     input wire is_invalidM,        //是否保留指令（未实现指令）
 
-    output wire is_except,         //是否触发例外
+    output reg is_except,         //是否触发例外
     output reg[31:0] except_type,  //触发例外类型
     output reg[31:0] except_pc     //触发例外时的下一pc,所有的例外处理统一入口地址32'hBFC00380
     );

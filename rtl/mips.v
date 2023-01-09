@@ -59,6 +59,7 @@ module mips(
 	maindec md(
 		opD,
 		functD,
+		rsD,
 		rtD,
 		memtoregD,memwriteD,
 		branchD,alusrcD,
@@ -70,7 +71,7 @@ module mips(
 		cp0_writeD,
 		is_invalidD
 		);
-	aludec ad(functD,opD,alucontrolD);
+	aludec ad(functD,opD,rtD,alucontrolD);
 
 	assign pcsrcD = branchD & equalD;
 

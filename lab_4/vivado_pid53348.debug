@@ -1,0 +1,67 @@
+#--------------------------------------------------------------------------
+# Xilinx Vivado v2019.2 (64-bit)
+# SW Build: 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build: 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Current time: Mon Jan 09 22:46:08 CST 2023
+# Process ID (PID): 53348
+# User: lenovo
+# OS: Windows 10
+#
+# This file is an indication that an internal application error occurred.
+# This information is useful for debugging. Please open a case with Xilinx.
+# Technical Support with this file and a testcase attached.
+#--------------------------------------------------------------------------
+Mon Jan 09 22:46:08 CST 2023
+ui.utils.e: ui.frmwork.CommandFailedException: Unknown exception occurred ui.frmwork.CommandFailedException: Unknown exception occurred
+	at ui.views.simulator.executive.simulationi.SimulationExecutive_getTreeWindowData(Native Method)
+	at ui.views.O.c.a.a(SourceFile:254)
+	at ui.views.O.i.f.load(SourceFile:211)
+	at ui.views.O.i.p.gys(SourceFile:148)
+	at ui.views.O.f.d.a(SourceFile:241)
+	at ui.frmwork.b.l.d(SourceFile:42)
+	at ui.frmwork.G.i(SourceFile:253)
+	at ui.frmwork.G.fireTclEvent(SourceFile:350)
+	at ui.views.simulator.executive.simulationi.SimulationExecutive_setTreeWindowTreeHeight(Native Method)
+	at ui.views.O.c.a.b(SourceFile:674)
+	at ui.views.O.i.f.gzG(SourceFile:116)
+	at ui.views.O.i.h.gzN(SourceFile:130)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.desktop/java.awt.EventQueue.access$500(Unknown Source)
+	at java.desktop/java.awt.EventQueue$3.run(Unknown Source)
+	at java.desktop/java.awt.EventQueue$3.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at ui.frmwork.b.d.dispatchEvent(SourceFile:88)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.run(Unknown Source)
+
+	at ui.utils.d.c.f(SourceFile:845)
+	at ui.utils.d.c.debug(SourceFile:240)
+	at ui.utils.o.debug(SourceFile:229)
+	at ui.frmwork.G.fireTclEvent(SourceFile:353)
+	at ui.views.simulator.executive.simulationi.SimulationExecutive_setTreeWindowTreeHeight(Native Method)
+	at ui.views.O.c.a.b(SourceFile:674)
+	at ui.views.O.i.f.gzG(SourceFile:116)
+	at ui.views.O.i.h.gzN(SourceFile:130)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.desktop/java.awt.EventQueue.access$500(Unknown Source)
+	at java.desktop/java.awt.EventQueue$3.run(Unknown Source)
+	at java.desktop/java.awt.EventQueue$3.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at ui.frmwork.b.d.dispatchEvent(SourceFile:88)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.run(Unknown Source)
+

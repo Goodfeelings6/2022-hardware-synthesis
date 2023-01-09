@@ -1,7 +1,7 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-// Date        : Sat Jan  7 01:42:07 2023
+// Date        : Mon Jan  9 23:43:28 2023
 // Host        : LAPTOP-RO40C96K running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               C:/Users/lenovo/Desktop/2022_hardware_synthesis/MyMipsCPU/rtl/ip/inst_mem/inst_mem_stub.v
@@ -15,8 +15,8 @@
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
 (* x_core_info = "blk_mem_gen_v8_4_4,Vivado 2019.2" *)
 module inst_mem(clka, addra, douta)
-/* synthesis syn_black_box black_box_pad_pin="clka,addra[5:0],douta[31:0]" */;
+/* synthesis syn_black_box black_box_pad_pin="clka,addra[6:0],douta[31:0]" */;
   input clka;
-  input [5:0]addra;
+  input [6:0]addra;
   output [31:0]douta;
 endmodule
