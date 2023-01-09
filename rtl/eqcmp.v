@@ -22,8 +22,24 @@
 
 module eqcmp(
 	input wire [31:0] a,b,
-	output wire y
+	input wire [5:0] opD,
+	input wire [4:0] rtD,
+	output reg y
     );
-
-	assign y = (a == b) ? 1 : 0;
+	always@(*) begin
+		case(opD)
+			`BEQ : y = (a == b);
+			`BNE : y = (a != b);
+			`BGTZ : y = ((a[31] == 1'b0) & (a != `ZeroWord));
+			`BLEZ : y = ((a[31] == 1'b1) | (a == `ZeroWord));
+			`REGIMM_INST : begin
+				case(rtD) 
+					`BGEZ,`BGEZAL : y = (a[31] == 1'b0);
+					`BLTZ,`BLTZAL : y = (a[31] == 1'b1);
+					default :y = 1'b0;
+				endcase
+			end
+			default :y = 1'b0;
+		endcase
+	end
 endmodule

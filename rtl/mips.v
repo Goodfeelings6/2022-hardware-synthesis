@@ -101,7 +101,7 @@ module mips(
 	wire is_AdEL_pcF;
 	wire is_in_delayslotF; //当前指令是否在延迟槽
 	//FD
-	wire [31:0] pcnextFD,pcnextbrFD,pcplus4F,pcbranchD,pcnextF;
+	wire [31:0] pcnextFD,pcnextbrFD,pcplus4F,pcbranchD,pcnextjrD,pcnextF;
 	//decode stage
 	wire [31:0] pcplus4D,instrD;
 	wire forwardaD,forwardbD;
@@ -120,7 +120,7 @@ module mips(
 	wire [4:0] rsE,rtE,rdE,saE;
 	wire [4:0] writeregE;
 	wire [31:0] signimmE;
-	wire [31:0] srcaE,srca2E,srcbE,srcb2E,srcb3E;
+	wire [31:0] srcaE,srca2E,srca3E,  srcbE,srcb2E,srcb3E,srcb4E;
 	wire [31:0] aluoutE;
 	wire [63:0] read_hiloE,write_hiloE;//HILO读写数据
 	wire hilo_write2E; //考虑了除法后的hilo寄存器写信号
@@ -186,7 +186,8 @@ module mips(
 	mux2 #(32) pcjumpmux(pcnextbrFD,
 		{pcplus4D[31:28],instrD[25:0],2'b00},
 		jumpD,pcnextFD);
-	mux2 #(32) pc_except_mux(pcnextFD,except_pcM,is_exceptM,pcnextF); //处理异常添加
+	mux2 #(32) pc_jr_mux(pcnextFD,srca2D,jrD,pcnextjrD);
+	mux2 #(32) pc_except_mux(pcnextjrD,except_pcM,is_exceptM,pcnextF); //处理异常添加
 
 	//regfile (operates in decode and writeback)
 	regfile rf(clk,regwriteW,rsD,rtD,writeregW,resultW,srcaD,srcbD);
@@ -210,7 +211,7 @@ module mips(
 	adder pcadd2(pcplus4D,signimmshD,pcbranchD);
 	mux2 #(32) forwardamux(srcaD,aluoutM,forwardaD,srca2D);
 	mux2 #(32) forwardbmux(srcbD,aluoutM,forwardbD,srcb2D);
-	eqcmp comp(srca2D,srcb2D,equalD);
+	eqcmp comp(srca2D,srcb2D,opD,rtD,equalD);
 
 	assign opD = instrD[31:26];
 	assign functD = instrD[5:0];
@@ -245,10 +246,13 @@ module mips(
 	mux3 #(32) forwardaemux(srcaE,resultW,aluoutM,forwardaE,srca2E);
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
 	mux2 #(32) srcbmux(srcb2E,signimmE,alusrcE,srcb3E);
+	//跳转链接类指令,复用ALU,ALU源操作数选择为pcE和8
+	mux2 #(32) alusrcamux(srca2E,pcE,jbralE,srca3E);
+	mux2 #(32) alusrcbmux(srcb3E,32'h00000008,jbralE,srcb4E);
 	//CP0写后读数据前推
 	mux2 #(32) forwardcp0mux(cp0_rdataE,aluoutM,(cp0_raddrE == cp0_waddrM),cp0_rdata2E); 
 
-	alu alu(clk,rst,srca2E,srcb3E,alucontrolE,saE,read_hiloE,cp0_rdata2E,
+	alu alu(clk,rst,srca3E,srcb4E,alucontrolE,saE,read_hiloE,cp0_rdata2E,
 			write_hiloE,aluoutE,div_readyE,div_stallE,is_overflowE);
 	assign hilo_write2E = (alucontrolE == `DIV_CONTROL) ? (div_readyE & hilo_writeE) : (hilo_writeE); 
 	hilo_reg hilo_reg(clk,rst,(hilo_write2E & ~is_exceptM),write_hiloE,read_hiloE);
