@@ -35,7 +35,7 @@ module mycpu_top(
 	wire [31:0] data_paddr;
 	
     mips mips(
-        .clk(clk),
+        .clk(~clk),//时钟取反，这样DRAM和IRAM可以在同周期取数据
         .rst(~resetn),
         //instr
         // .inst_en(inst_en),
