@@ -39,6 +39,7 @@ module hazard(
 	output wire flushD,
 	output wire flushE,
 	output wire flushM,
+	output wire flushW,
 	output wire stallE,
 	//mem stage
 	input wire[4:0] writeregM,
@@ -90,10 +91,14 @@ module hazard(
 				(regwriteE & (writeregE == rsD | writeregE == rtD) |
 				memtoregM & (writeregM == rsD | writeregM == rtD));
 	assign stallD = lwstallD | branchstallD | div_stallE;
-	assign stallF = stallD; //stalling D stalls all previous stages
+	assign stallF = (~is_exceptM & stallD); //触发异常处理时，可能有后续指令(无效执行指令)会暂停流水线，
+											//这个暂停会导致pc取不到异常处理地址0xBFC00380。因为暂停时，pc保持不变，
+											//然后下一周期不暂停了，但是0xBFC00380也流走了，所以这个异常就得不到处理，出错
+											//因此，触发异常时，不能暂停取指阶段 
 	assign stallE = div_stallE; //执行除法时EX阶段暂停
 	
 	assign flushD = is_exceptM;
 	assign flushE = lwstallD | branchstallD | is_exceptM; //stalling D flushes next stage
 	assign flushM = is_exceptM | div_stallE;
+	assign flushW = is_exceptM;
 endmodule

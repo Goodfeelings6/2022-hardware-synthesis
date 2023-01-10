@@ -80,7 +80,7 @@ module maindec(
 			`SPECIAL3_INST:
 				case(rs)
 					`MTC0:controls <= 12'b0_00_000000001;
-        			`MFC0:controls <= 12'b1_00_000010000;
+        			`MFC0:controls <= 12'b1_00_000000000;
         			`ERET:controls <= 12'b0_00_000000000;
 					default:  begin
 						controls <= 12'b000000000000;

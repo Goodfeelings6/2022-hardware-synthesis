@@ -22,11 +22,13 @@
 
 module mips(
 	input wire clk,rst,
+	input wire [5:0] ext_int,//硬件中断标识
 	output wire[31:0] pcF,
 	input wire[31:0] instrF,
 	output wire memwriteM,
 	output wire[31:0] aluoutM,mem_write_dataM,
-	input wire[31:0] readdataM, 
+	input wire[31:0] readdataM,
+	output wire mem_enM, //存储器使能
 	output wire [3:0] mem_wenM,
 	//for debug
     output [31:0] debug_wb_pc     ,
@@ -35,7 +37,7 @@ module mips(
     output [31:0] debug_wb_rf_wdata
     );
 
-	//连接controller �??? datapath
+	//连接controller and datapath
 	wire [5:0] opD,opE,opM,functD;
 	wire [1:0] regdstE;
 	wire alusrcE,pcsrcD,memtoregE,memtoregM,memtoregW,
@@ -44,8 +46,6 @@ module mips(
 	wire flushD,flushE,flushM,equalD;
 	wire hilo_writeE; //hilo寄存器写信号
 	wire is_invalidM; //保留指令
-	wire [5:0] ext_int;//硬件中断�?
-	assign ext_int = 6'b000000;
 	wire cp0_writeM; //cp0寄存器写信号
 	
 //----------------------------------------------for debug begin----------------------------------------------------	
@@ -68,7 +68,7 @@ module mips(
 	wire[1:0] regdstD;
 	wire[4:0] alucontrolD;
 	wire hilo_writeD;//由maindec译码得来
-	wire is_invalidD,is_invalidE; //maindec译码得来，无效指令标�?
+	wire is_invalidD,is_invalidE; //maindec译码得来，无效指令标识
 	wire jbralD,jrD,cp0_writeD;
 
 	//execute stage
@@ -90,7 +90,7 @@ module mips(
 		cp0_writeD,
 		is_invalidD
 		);
-	aludec ad(functD,opD,rtD,alucontrolD);
+	aludec ad(functD,opD,rsD,rtD,alucontrolD);
 
 	assign pcsrcD = branchD & equalD;
 
@@ -132,8 +132,8 @@ module mips(
 	wire is_AdEL_pcD,is_syscallD,is_breakD,is_eretD; //例外标记
 	wire is_in_delayslotD; 
 	wire [31:0] pcD;
-	wire [4:0] cp0_waddrD; //cp0写地�?，指令MTC0
-	wire [4:0] cp0_raddrD; //cp0读地�?，指令MFC0
+	wire [4:0] cp0_waddrD; //cp0写地址，指令MTC0
+	wire [4:0] cp0_raddrD; //cp0读地址，指令MFC0
 
 	//execute stage
 	wire [1:0] forwardaE,forwardbE;
@@ -152,7 +152,7 @@ module mips(
 	wire [31:0] pcE;
 	wire [4:0] cp0_waddrE;
 	wire [4:0] cp0_raddrE;
-	wire [31:0] cp0_rdataE;
+	wire [31:0] cp0_rdataE,cp0_rdata2E;
 
 	//mem stage
 	wire [4:0] writeregM;
@@ -161,11 +161,11 @@ module mips(
 	wire is_in_delayslotM;
 	wire [31:0] pcM;
 	wire [4:0] cp0_waddrM;
-	wire [4:0] cp0_raddrM;
 	wire is_exceptM;
 	wire [31:0] except_typeM;
 	wire [31:0] except_pcM;
 	wire [31:0] cp0_statusM,cp0_causeM,cp0_epcM;
+	wire [31:0] bad_addrM;
 
 	//writeback stage
 	wire [4:0] writeregW;
@@ -191,6 +191,7 @@ module mips(
 		flushD,
 		flushE,
 		flushM,
+		flushW,
 		stallE,
 		//mem stage
 		writeregM,
@@ -267,15 +268,16 @@ module mips(
 	mux3 #(32) forwardaemux(srcaE,resultW,aluoutM,forwardaE,srca2E);
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
 	mux2 #(32) srcbmux(srcb2E,signimmE,alusrcE,srcb3E);
-	//跳转链接类指�?,复用ALU,ALU源操作数选择为pcE�?8
+	//跳转链接类指令,复用ALU,ALU源操作数选择分别为pcE、8
 	mux2 #(32) alusrcamux(srca2E,pcE,jbralE,srca3E);
 	mux2 #(32) alusrcbmux(srcb3E,32'h00000008,jbralE,srcb4E);
-	//CP0写后读数据前�?
+	//CP0写后读数据前推
 	mux2 #(32) forwardcp0mux(cp0_rdataE,aluoutM,(cp0_raddrE == cp0_waddrM),cp0_rdata2E); 
 
-	alu alu(clk,rst,srca3E,srcb4E,alucontrolE,saE,read_hiloE,cp0_rdata2E,
+	alu alu(clk,rst,srca3E,srcb4E,alucontrolE,saE,read_hiloE,cp0_rdata2E,is_exceptM,
 			write_hiloE,aluoutE,div_readyE,div_stallE,is_overflowE);
-	assign hilo_write2E = (alucontrolE == `DIV_CONTROL) ? (div_readyE & hilo_writeE) : (hilo_writeE); 
+	assign hilo_write2E = (alucontrolE == `DIV_CONTROL | alucontrolE == `DIVU_CONTROL) ? 
+							(div_readyE & hilo_writeE) : (hilo_writeE); 
 	hilo_reg hilo_reg(clk,rst,(hilo_write2E & ~is_exceptM),write_hiloE,read_hiloE);
 	mux3 #(5) wrmux(rtE,rdE,5'd31,regdstE,writeregE);
 
@@ -290,8 +292,8 @@ module mips(
 	floprc #(1) r6M(clk,rst,flushM,is_in_delayslotE,is_in_delayslotM);
 	floprc #(32) r7M(clk,rst,flushM,pcE,pcM);
 	floprc #(5) r8M(clk,rst,flushM,cp0_waddrE,cp0_waddrM);
-	floprc #(5) r9M(clk,rst,flushM,cp0_raddrE,cp0_raddrM);
-	
+
+	assign mem_enM = (~is_AdEL_dataM & ~is_AdESM); //存储器使能，防止异常地址写入或读出
 	mem_ctrl mem_ctrl(opM,aluoutM,readdataM,final_read_dataM,writedataM,mem_write_dataM,mem_wenM,is_AdEL_dataM,is_AdESM);
 	exceptdec exceptdec(
 		//input
@@ -321,7 +323,7 @@ module mips(
 		.rst(rst),
 		.we_i(cp0_writeM),    
 		.waddr_i(cp0_waddrM),
-		.raddr_i(cp0_raddrM),
+		.raddr_i(cp0_raddrE),
 		.data_i(aluoutM),
 		.int_i(ext_int),
 		.excepttype_i(except_typeM),
@@ -342,9 +344,9 @@ module mips(
 	);
 
 	//writeback stage
-	flopr #(32) r1W(clk,rst,aluoutM,aluoutW);
-	flopr #(32) r2W(clk,rst,final_read_dataM,readdataW);
-	flopr #(5) r3W(clk,rst,writeregM,writeregW);
+	floprc #(32) r1W(clk,rst,flushW,aluoutM,aluoutW);
+	floprc #(32) r2W(clk,rst,flushW,final_read_dataM,readdataW);
+	floprc #(5) r3W(clk,rst,flushW,writeregM,writeregW);
 	mux2 #(32) resmux(aluoutW,readdataW,memtoregW,resultW);
 //----------------------------------------datapath 模块end------------------------------------------
 

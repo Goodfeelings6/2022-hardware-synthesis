@@ -24,6 +24,7 @@
 module aludec(
 	input wire[5:0] funct,
 	input wire[5:0] op,
+	input wire[4:0] rs,
 	input wire[4:0] rt,
 	output reg[4:0] alucontrol
     );
@@ -82,6 +83,12 @@ module aludec(
 					`BGEZAL, `BLTZAL:	alucontrol = `ADDU_CONTROL; //做加法
 				endcase	
 			`JAL : alucontrol = `ADDU_CONTROL; //做加法
+			//for exception
+			`SPECIAL3_INST:
+				case(rs)
+					`MTC0:   alucontrol = `MTC0_CONTROL;
+        			`MFC0:   alucontrol = `MFC0_CONTROL;
+				endcase  
 			default:    alucontrol = `USELESS_CONTROL;
 		endcase
 	end

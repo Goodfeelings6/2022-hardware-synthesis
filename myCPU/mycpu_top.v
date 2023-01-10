@@ -21,9 +21,9 @@ module mycpu_top(
     output [31:0] debug_wb_rf_wdata
 );
 
-// �?个例�?
 	wire [31:0] pc;
 	wire [31:0] instr;
+    wire data_en;
 	wire memwrite;
 	wire [31:0] aluout, writedata, readdata;
 	wire [3:0] mem_wen;
@@ -37,12 +37,13 @@ module mycpu_top(
     mips mips(
         .clk(~clk),//时钟取反，这样DRAM和IRAM可以在同一时钟周期取值
         .rst(~resetn),
+        .ext_int(ext_int),
         //instr
         // .inst_en(inst_en),
         .pcF(pc),                    //pcF
         .instrF(instr),              //instrF
         //data
-        // .data_en(data_en),
+        .mem_enM(data_en),
         .memwriteM(memwrite),
         .aluoutM(aluout),
         .mem_write_dataM(writedata),
@@ -70,7 +71,7 @@ module mycpu_top(
     assign inst_sram_wdata = 32'b0;
     assign instr = inst_sram_rdata;
 
-    assign data_sram_en = 1'b1;     //如果有data_en，就用data_en
+    assign data_sram_en = data_en;     //如果有data_en，就用data_en
     assign data_sram_wen = mem_wen;
     assign data_sram_addr = data_paddr;
     assign data_sram_wdata = writedata;
