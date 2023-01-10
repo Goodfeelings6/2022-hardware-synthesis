@@ -21,7 +21,7 @@ module mycpu_top(
     output [31:0] debug_wb_rf_wdata
 );
 
-
+// �?个例�?
 	wire [31:0] pc;
 	wire [31:0] instr;
 	wire memwrite;
@@ -35,7 +35,7 @@ module mycpu_top(
 	wire [31:0] data_paddr;
 	
     mips mips(
-        .clk(~clk),//时钟取反，这样DRAM和IRAM可以在同周期取数据
+        .clk(~clk),//时钟取反，这样DRAM和IRAM可以在同一时钟周期取值
         .rst(~resetn),
         //instr
         // .inst_en(inst_en),

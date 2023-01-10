@@ -26,6 +26,7 @@ module hazard(
 	//decode stage
 	input wire[4:0] rsD,rtD,
 	input wire branchD,
+	input wire jrD,
 	output wire forwardaD,forwardbD,
 	output wire stallD,
 	//execute stage
@@ -85,11 +86,9 @@ module hazard(
 
 	//stalls
 	assign lwstallD = memtoregE & (rtE == rsD | rtE == rtD);
-	assign branchstallD = branchD &
-				(regwriteE & 
-				(writeregE == rsD | writeregE == rtD) |
-				memtoregM &
-				(writeregM == rsD | writeregM == rtD));
+	assign branchstallD = (branchD | jrD) &
+				(regwriteE & (writeregE == rsD | writeregE == rtD) |
+				memtoregM & (writeregM == rsD | writeregM == rtD));
 	assign stallD = lwstallD | branchstallD | div_stallE;
 	assign stallF = stallD; //stalling D stalls all previous stages
 	assign stallE = div_stallE; //执行除法时EX阶段暂停

@@ -35,18 +35,18 @@ module mips(
     output [31:0] debug_wb_rf_wdata
     );
 
-	//连接controller 和 datapath
+	//杩炴帴controller 锟??? datapath
 	wire [5:0] opD,opE,opM,functD;
 	wire [1:0] regdstE;
 	wire alusrcE,pcsrcD,memtoregE,memtoregM,memtoregW,
 			regwriteE,regwriteM,regwriteW;
 	wire [4:0] alucontrolE;
 	wire flushD,flushE,flushM,equalD;
-	wire hilo_writeE; //hilo寄存器写信号
-	wire is_invalidM; //保留指令
-	wire [5:0] ext_int;//硬件中断信号
+	wire hilo_writeE; //hilo瀵勫瓨鍣ㄥ啓淇″彿
+	wire is_invalidM; //淇濈暀鎸囦护
+	wire [5:0] ext_int;//纭欢涓柇浣?
 	assign ext_int = 6'b000000;
-	wire cp0_writeM; //cp0寄存器写信号
+	wire cp0_writeM; //cp0瀵勫瓨鍣ㄥ啓淇″彿
 	
 //----------------------------------------------for debug begin----------------------------------------------------	
     wire [31:0] pcW;
@@ -62,13 +62,13 @@ module mips(
     assign debug_wb_rf_wdata    = resultW;
 //----------------------------------------------for debug end----------------------------------------------------
 
-//----------------------------------------controler 模块begin------------------------------------------
+//----------------------------------------controler 妯″潡begin------------------------------------------
 	//decode stage
 	wire memtoregD,memwriteD,alusrcD,regwriteD;
 	wire[1:0] regdstD;
 	wire[4:0] alucontrolD;
-	wire hilo_writeD;//由maindec译码得来
-	wire is_invalidD,is_invalidE; //maindec译码得来，无效指令标记
+	wire hilo_writeD;//鐢眒aindec璇戠爜寰楁潵
+	wire is_invalidD,is_invalidE; //maindec璇戠爜寰楁潵锛屾棤鏁堟寚浠ゆ爣璇?
 	wire jbralD,jrD,cp0_writeD;
 
 	//execute stage
@@ -113,13 +113,13 @@ module mips(
 		{memtoregM,regwriteM},
 		{memtoregW,regwriteW}
 		);
-//----------------------------------------controler 模块end------------------------------------------
+//----------------------------------------controler 妯″潡end------------------------------------------
 
-//----------------------------------------datapath 模块begin------------------------------------------
+//----------------------------------------datapath 妯″潡begin------------------------------------------
 	//fetch stage
 	wire stallF;
 	wire is_AdEL_pcF;
-	wire is_in_delayslotF; //当前指令是否在延迟槽
+	wire is_in_delayslotF; //褰撳墠鎸囦护鏄惁鍦ㄥ欢杩熸Ы
 	//FD
 	wire [31:0] pcnextFD,pcnextbrFD,pcplus4F,pcbranchD,pcnextjrD,pcnextF;
 	//decode stage
@@ -129,11 +129,11 @@ module mips(
 	wire stallD; 
 	wire [31:0] signimmD,signimmshD;
 	wire [31:0] srcaD,srca2D,srcbD,srcb2D;
-	wire is_AdEL_pcD,is_syscallD,is_breakD,is_eretD; //例外标记
+	wire is_AdEL_pcD,is_syscallD,is_breakD,is_eretD; //渚嬪鏍囪
 	wire is_in_delayslotD; 
 	wire [31:0] pcD;
-	wire [4:0] cp0_waddrD; //cp0写地址，指令MTC0
-	wire [4:0] cp0_raddrD; //cp0读地址，指令MFC0
+	wire [4:0] cp0_waddrD; //cp0鍐欏湴鍧?锛屾寚浠TC0
+	wire [4:0] cp0_raddrD; //cp0璇诲湴鍧?锛屾寚浠FC0
 
 	//execute stage
 	wire [1:0] forwardaE,forwardbE;
@@ -142,12 +142,12 @@ module mips(
 	wire [31:0] signimmE;
 	wire [31:0] srcaE,srca2E,srca3E,  srcbE,srcb2E,srcb3E,srcb4E;
 	wire [31:0] aluoutE;
-	wire [63:0] read_hiloE,write_hiloE;//HILO读写数据
-	wire hilo_write2E; //考虑了除法后的hilo寄存器写信号
-	wire div_readyE; //除法运算是否完成
-	wire div_stallE; //除法导致的流水线暂停控制
-	wire stallE; //Ex阶段暂停控制信号
-	wire is_AdEL_pcE,is_syscallE,is_breakE,is_eretE,is_overflowE; //例外标记
+	wire [63:0] read_hiloE,write_hiloE;//HILO璇诲啓鏁版嵁
+	wire hilo_write2E; //鑰冭檻浜嗛櫎娉曞悗鐨刪ilo瀵勫瓨鍣ㄥ啓淇″彿
+	wire div_readyE; //闄ゆ硶杩愮畻鏄惁瀹屾垚
+	wire div_stallE; //闄ゆ硶瀵艰嚧鐨勬祦姘寸嚎鏆傚仠鎺у埗
+	wire stallE; //Ex闃舵鏆傚仠鎺у埗淇″彿
+	wire is_AdEL_pcE,is_syscallE,is_breakE,is_eretE,is_overflowE; //渚嬪鏍囪
 	wire is_in_delayslotE;
 	wire [31:0] pcE;
 	wire [4:0] cp0_waddrE;
@@ -157,7 +157,7 @@ module mips(
 	//mem stage
 	wire [4:0] writeregM;
 	wire [31:0] final_read_dataM,writedataM;
-	wire is_AdEL_pcM,is_syscallM,is_breakM,is_eretM,is_AdEL_dataM,is_AdESM,is_overflowM; //例外标记
+	wire is_AdEL_pcM,is_syscallM,is_breakM,is_eretM,is_AdEL_dataM,is_AdESM,is_overflowM; //渚嬪鏍囪
 	wire is_in_delayslotM;
 	wire [31:0] pcM;
 	wire [4:0] cp0_waddrM;
@@ -178,6 +178,7 @@ module mips(
 		//decode stage
 		rsD,rtD,
 		branchD,
+		jrD,
 		forwardaD,forwardbD,
 		stallD,
 		//execute stage
@@ -207,7 +208,7 @@ module mips(
 		{pcplus4D[31:28],instrD[25:0],2'b00},
 		jumpD,pcnextFD);
 	mux2 #(32) pc_jr_mux(pcnextFD,srca2D,jrD,pcnextjrD);
-	mux2 #(32) pc_except_mux(pcnextjrD,except_pcM,is_exceptM,pcnextF); //处理异常添加
+	mux2 #(32) pc_except_mux(pcnextjrD,except_pcM,is_exceptM,pcnextF); //澶勭悊寮傚父娣诲姞
 
 	//regfile (operates in decode and writeback)
 	regfile rf(clk,regwriteW,rsD,rtD,writeregW,resultW,srcaD,srcbD);
@@ -266,10 +267,10 @@ module mips(
 	mux3 #(32) forwardaemux(srcaE,resultW,aluoutM,forwardaE,srca2E);
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
 	mux2 #(32) srcbmux(srcb2E,signimmE,alusrcE,srcb3E);
-	//跳转链接类指令,复用ALU,ALU源操作数选择为pcE和8
+	//璺宠浆閾炬帴绫绘寚浠?,澶嶇敤ALU,ALU婧愭搷浣滄暟閫夋嫨涓簆cE鍜?8
 	mux2 #(32) alusrcamux(srca2E,pcE,jbralE,srca3E);
 	mux2 #(32) alusrcbmux(srcb3E,32'h00000008,jbralE,srcb4E);
-	//CP0写后读数据前推
+	//CP0鍐欏悗璇绘暟鎹墠鎺?
 	mux2 #(32) forwardcp0mux(cp0_rdataE,aluoutM,(cp0_raddrE == cp0_waddrM),cp0_rdata2E); 
 
 	alu alu(clk,rst,srca3E,srcb4E,alucontrolE,saE,read_hiloE,cp0_rdata2E,
@@ -331,9 +332,9 @@ module mips(
 		.data_o(cp0_rdataE),
 		// .count_o(),
 		// .compare_o(),
-		.status_o(cp0_statusM), //用于判断中断
-		.cause_o(cp0_causeM), //用于判断中断
-		.epc_o(cp0_epcM)  //用于ERET
+		.status_o(cp0_statusM), //鐢ㄤ簬鍒ゆ柇涓柇
+		.cause_o(cp0_causeM), //鐢ㄤ簬鍒ゆ柇涓柇
+		.epc_o(cp0_epcM)  //鐢ㄤ簬ERET
 		// .config_o(),
 		// .prid_o(),
 		// .badvaddr(),
@@ -345,7 +346,7 @@ module mips(
 	flopr #(32) r2W(clk,rst,final_read_dataM,readdataW);
 	flopr #(5) r3W(clk,rst,writeregM,writeregW);
 	mux2 #(32) resmux(aluoutW,readdataW,memtoregW,resultW);
-//----------------------------------------datapath 模块end------------------------------------------
+//----------------------------------------datapath 妯″潡end------------------------------------------
 
 	
 endmodule
