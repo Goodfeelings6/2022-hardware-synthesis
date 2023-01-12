@@ -19,7 +19,7 @@ module mmu (
     assign data_paddr = data_kseg0 | data_kseg1 ?
            {3'b0, data_vaddr[28:0]} : data_vaddr;
     
-    assign no_dcache = data_kseg1 ? 1'b1 : 1'b0;
-    // assign no_dcache = 1'b1;
+    // assign no_dcache = data_kseg1 ? 1'b1 : 1'b0;
+    assign no_dcache = 1'b1;
 
 endmodule

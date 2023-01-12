@@ -101,10 +101,10 @@ module hazard(
 
 	//stalls state
 	assign stallD = lwstallD | branchstallD | longest_stall;
-	assign stallF = (~is_exceptM & stallD); //触发异常处理时，可能有后续指�?(无效执行指令)会暂停流水线�?
-											//这个暂停会导致pc取不到异常处理地�?0xBFC00380。因为暂停时，pc保持不变�?
-											//然后下一周期不暂停了，但�?0xBFC00380也流走了，所以这个异常就得不到处理，出错
-											//因此，触发异常时，不能暂停取指阶�? 
+	assign stallF = (~is_exceptM & stallD); //触发异常处理时，可能有后续指令(无效执行指令)会暂停流水线
+											//这个暂停会导致pc取不到异常处理地址0xBFC00380。因为暂停时，pc保持不变，
+											//然后下一周期不暂停了，但是0xBFC00380也流走了，所以这个异常就得不到处理，出错
+											//因此，触发异常时，不能暂停取指阶段
 	assign stallE = longest_stall; 
 	assign stallM = longest_stall;
     assign stallW = longest_stall & ~is_exceptM;

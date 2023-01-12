@@ -61,7 +61,7 @@ module aludec(
 					`MFLO:      alucontrol = `MFLO_CONTROL;
 					`MTLO:      alucontrol = `MTLO_CONTROL;
 					//JALR      
-					`JALR:      alucontrol = `ADDU_CONTROL; //做加�?
+					`JALR:      alucontrol = `ADDU_CONTROL; //做加法
 					default:    alucontrol = `USELESS_CONTROL;
 				endcase
 			//I-type
@@ -77,13 +77,13 @@ module aludec(
 			`XORI:		alucontrol = `XOR_CONTROL;
 				//访存
 			`LB, `LBU, `LH, `LHU, `LW, `SB, `SH, `SW:	alucontrol = `ADDU_CONTROL;
-				//跳转链接�?
+				//跳转链接类
 			`REGIMM_INST:
 				case(rt)		
-					`BGEZAL, `BLTZAL:	alucontrol = `ADDU_CONTROL; //做加�?
+					`BGEZAL, `BLTZAL:	alucontrol = `ADDU_CONTROL; //做加法
 					default:    alucontrol = `USELESS_CONTROL;
 				endcase	
-			`JAL : alucontrol = `ADDU_CONTROL; //做加�?
+			`JAL : alucontrol = `ADDU_CONTROL; //做加法
 			//for exception
 			`SPECIAL3_INST:
 				case(rs)

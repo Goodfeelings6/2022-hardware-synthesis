@@ -26,18 +26,18 @@ module mips(
 
 	//instr
 	output wire[31:0] pcF,
-	output wire instr_enF, //指令存储器使�?
+	output wire instr_enF, //指令存储器使能
 	input wire[31:0] instrF,
 	input wire i_stall, //指令存储器读指令时暂停流水线信号
 
 	//data
 	// output wire memwriteM,
-	output wire[31:0] aluoutM, //数据存储器读写地�?
-	output wire[31:0] mem_write_dataM, //写数�?
-	input wire[31:0] readdataM,        //读数�?
-	output wire mem_enM,    //数据存储器使�?
+	output wire[31:0] aluoutM, //数据存储器读写地址
+	output wire[31:0] mem_write_dataM, //写数据
+	input wire[31:0] readdataM,        //读数据
+	output wire mem_enM,    //数据存储器使能
 	output wire [3:0] mem_wenM, //数据存储器字节写使能
-	input wire d_stall, //数据存储器读写数据时暂停流水线信�?
+	input wire d_stall, //数据存储器读写数据时暂停流水线信号
 
 	output wire longest_stall,
 
@@ -63,7 +63,7 @@ module mips(
 	wire[1:0] regdstD;
 	wire[4:0] alucontrolD;
 	wire hilo_writeD;//由maindec译码得来
-	wire is_invalidD; //maindec译码得来，无效指令标�??
+	wire is_invalidD; //maindec译码得来，无效指令
 	wire jbralD,jrD,cp0_writeD;
 	//decode stage datapath
 	wire [31:0] pcplus4D,instrD;
@@ -76,8 +76,8 @@ module mips(
 	wire is_AdEL_pcD,is_syscallD,is_breakD,is_eretD; //例外标记
 	wire is_in_delayslotD; 
 	wire [31:0] pcD;
-	wire [4:0] cp0_waddrD; //cp0写地�??，指令MTC0
-	wire [4:0] cp0_raddrD; //cp0读地�??，指令MFC0
+	wire [4:0] cp0_waddrD; //cp0写地址，指令MTC0
+	wire [4:0] cp0_raddrD; //cp0读地址，指令MFC0
 	
 
 	//execute stage controler
@@ -99,7 +99,7 @@ module mips(
 	wire hilo_write2E; //考虑了除法后的hilo寄存器写信号
 	wire div_readyE; //除法运算是否完成
 	wire div_stallE; //除法导致的流水线暂停控制
-	wire stallE,flushE; //Ex阶段暂停、刷新控制信�??
+	wire stallE,flushE; //Ex阶段暂停、刷新控制信号
 	wire is_AdEL_pcE,is_syscallE,is_breakE,is_eretE,is_overflowE; //例外标记
 	wire is_in_delayslotE;
 	wire [31:0] pcE;
@@ -300,10 +300,10 @@ module mips(
 	mux3 #(32) forwardaemux(srcaE,resultW,aluoutM,forwardaE,srca2E);
 	mux3 #(32) forwardbemux(srcbE,resultW,aluoutM,forwardbE,srcb2E);
 	mux2 #(32) srcbmux(srcb2E,signimmE,alusrcE,srcb3E);
-	//跳转链接类指�??,复用ALU,ALU源操作数选择分别为pcE�??8
+	//跳转链接类指令,复用ALU,ALU源操作数选择分别为pcE and 8
 	mux2 #(32) alusrcamux(srca2E,pcE,jbralE,srca3E);
 	mux2 #(32) alusrcbmux(srcb3E,32'h00000008,jbralE,srcb4E);
-	//CP0写后读数据前�??
+	//CP0写后读数据前推
 	mux2 #(32) forwardcp0mux(cp0_rdataE,aluoutM,(cp0_raddrE == cp0_waddrM),cp0_rdata2E); 
 
 	alu alu(clk,rst,srca3E,srcb4E,alucontrolE,saE,read_hiloE,cp0_rdata2E,is_exceptM,
@@ -325,7 +325,7 @@ module mips(
 	flopenrc #(32) r7M(clk,rst,~stallM,flushM,pcE,pcM);
 	flopenrc #(5) r8M(clk,rst,~stallM,flushM,cp0_waddrE,cp0_waddrM);
 
-	assign mem_enM = (~is_AdEL_dataM & ~is_AdESM); //存储器使能，防止异常地址写入或读�??
+	assign mem_enM = (~is_AdEL_dataM & ~is_AdESM); //存储器使能，防止异常地址写入或读出
 	mem_ctrl mem_ctrl(opM,aluoutM,readdataM,final_read_dataM,writedataM,mem_write_dataM,mem_wenM,is_AdEL_dataM,is_AdESM);
 	exceptdec exceptdec(
 		//input
@@ -350,7 +350,7 @@ module mips(
 	);
 	assign bad_addrM = is_AdEL_pcM ? pcM : aluoutM;
 	wire [31:0] current_inst_addr;
-	flopr #(32) except_inst_addr(clk,rst,pcE,current_inst_addr); //??cp0???????????pcE??????flush?
+	flopr #(32) except_inst_addr(clk,rst,pcE,current_inst_addr); //写入cp0_epc, 由 pcE 传递来，无flush
 	cp0_reg cp0_reg(
 		//input
 		.clk(clk),                          

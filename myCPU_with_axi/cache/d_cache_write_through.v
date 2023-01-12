@@ -77,7 +77,7 @@ module d_cache_write_through (
     end
 
     //读内存
-    //变量read_req, addr_rcv, read_finish用于构造类sram信号。
+    //变量read_req, addr_rcv, read_finish用于构造类sram信号
     wire read_req;      //一次完整的读事务，从发出读请求到结束
     reg addr_rcv;       //地址接收成功(addr_ok)后到结束
     wire read_finish;   //数据接收成功(data_ok)，即读请求结束
@@ -133,7 +133,7 @@ module d_cache_write_through (
                                                 (cpu_data_addr[0] ? 4'b0010 : 4'b0001)) :
                             (cpu_data_size==2'b01 ? (cpu_data_addr[1] ? 4'b1100 : 4'b0011) : 4'b1111);
 
-    //掩码的使用：位为1的代表需要更新的。
+    //掩码的使用：位为1的代表需要更新的位
     //位拓展：{8{1'b1}} -> 8'b11111111
     //new_data = old_data & ~mask | write_data & mask
     assign write_cache_data = cache_block[index] & ~{{8{write_mask[3]}}, {8{write_mask[2]}}, {8{write_mask[1]}}, {8{write_mask[0]}}} | 
@@ -142,7 +142,10 @@ module d_cache_write_through (
     integer t;
     always @(posedge clk) begin
         if(rst) begin
-            cache_valid <= '{default:'0};
+             for(t=0; t<CACHE_DEEPTH; t=t+1) begin   //刚开始将Cache置为无效
+                 cache_valid[t] <= 0;
+             end
+//            cache_valid <= '{default:'0};  //for verilator sim
         end
         else begin
             if(read_finish) begin //读缺失，访存结束时
@@ -156,3 +159,4 @@ module d_cache_write_through (
         end
     end
 endmodule
+//            cache_valid <= '{default:'0};  //for verilator sim
